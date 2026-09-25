@@ -1,0 +1,72 @@
+---
+import Container from '../ui/Container.astro';
+import Carousel from '../ui/Carousel.astro';
+import ResponsiveImage from '../ui/ResponsiveImage.astro';
+import RichText from '../ui/RichText.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import { trajectory } from '../../content/story';
+
+const tones = {
+  blue: { marker: 'border-brand-blue', period: 'text-brand-blue' },
+  green: { marker: 'border-brand-green', period: 'text-brand-green' },
+} as const;
+---
+
+<section id="trayectoria" class="border-t border-ink/10 bg-white py-16 lg:py-24">
+  <Container>
+    <Eyebrow>{trajectory.eyebrow}</Eyebrow>
+    <h2 class="mt-3 text-4xl leading-[1.02] font-bold text-balance text-ink sm:text-5xl xl:text-[3.5rem]">
+      {trajectory.title}
+    </h2>
+    <p class="mt-5 max-w-2xl text-base text-ink/90 sm:text-lg">
+      <RichText text={trajectory.lead} />
+    </p>
+
+    <!-- Vertical timeline below lg, horizontal from lg. -->
+    <ol class="mt-12 grid gap-8 lg:grid-cols-4 lg:gap-6">
+      {trajectory.milestones.map((milestone, i) => {
+        const last = i === trajectory.milestones.length - 1;
+        return (
+          <li class="relative pl-10 lg:pt-12 lg:pl-0">
+            <span
+              class:list={[
+                'absolute top-0 left-0 size-6 rounded-full border-[3px] bg-white',
+                tones[milestone.tone].marker,
+              ]}
+              aria-hidden="true"
+            />
+            {!last && (
+              <span
+                class="absolute top-6 bottom-[-2rem] left-[11px] w-px bg-ink/30 lg:top-[11px] lg:right-[-1.5rem] lg:bottom-auto lg:left-6 lg:h-px lg:w-auto"
+                aria-hidden="true"
+              />
+            )}
+            <p
+              class:list={[
+                'text-xs font-bold tracking-[0.2em] uppercase',
+                tones[milestone.tone].period,
+              ]}
+            >
+              {milestone.period}
+            </p>
+            <h3 class="mt-2 text-2xl font-bold text-ink">{milestone.title}</h3>
+            <p class="mt-2 max-w-sm text-sm text-ink/90">{milestone.description}</p>
+          </li>
+        );
+      })}
+    </ol>
+
+    <Carousel label="Nuestro equipo" autoplay={6000} class="mt-14 lg:mt-20">
+      {trajectory.team.map((slide) => (
+        <li class="w-full">
+          <ResponsiveImage
+            src={slide.image}
+            alt={slide.alt}
+            sizes="(min-width: 1216px) 1120px, 100vw"
+            class="aspect-4/3 w-full rounded-3xl object-cover sm:aspect-[1.89]"
+          />
+        </li>
+      ))}
+    </Carousel>
+  </Container>
+</section>

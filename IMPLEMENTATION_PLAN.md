@@ -123,10 +123,12 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 
 ## Phase 5 — Storytelling sections (2 h)
 
-- [ ] "Mientras unos improvisan" section with 3-slide carousel ⏳ P-L7 (default: images only change, text is static)
-- [ ] Trajectory header and 4-step timeline (horizontal desktop, vertical mobile)
-- [ ] Team carousel with 4 photos
-- [ ] Promise section ("Garantía & Capacidad") with two cards
+- [x] "Mientras unos improvisan" section with 3-slide carousel ⏳ P-L7 (default: images only change, text is static)
+- [x] Trajectory header and 4-step timeline (vertical below 1024 px, horizontal from 1024 px)
+- [x] Team carousel with 4 photos
+- [x] Promise section ("Garantía & Capacidad") with two cards
+- [x] Copy and slides in `src/content/story.ts`; `RichText` component renders `**bold**` markers
+- [x] Verified in Chromium: no overflow at 390/768/1024/1440, lazy slides load on navigation, no 4xx responses
 
 ## Phase 6 — Solutions and Press (1.5 h)
 
@@ -246,3 +248,4 @@ Mirrors the client pendings in the scope document. Update the status column as i
 | 2026-09-24 | Phase 2 done. UI kit: Container, Button (null `href` renders a disabled placeholder), Eyebrow, SectionHeading, ResponsiveImage (AVIF/WebP, WebP fallback because sources have alpha), Carousel and Tabs as custom elements. `sharp` added as a direct dependency.     |
 | 2026-09-24 | Phase 3 done. Fixed header with scroll-spy, mobile menu on native `<dialog>`, floating WhatsApp button, navigation data in `src/content/navigation.ts`. Desktop nav starts at 1280 px because 6 links + CTA do not fit at 1024 px.                                    |
 | 2026-09-25 | Phase 4 done. Hero with YouTube background (test video `IXWEQHCKR20` in `site.ts`), custom controls, fallbacks, and client logos strip. Fixed a Phase 3 bug: `hidden` passed to `Button` lost against its base `inline-flex`; display utilities must go on a wrapper. |
+| 2026-09-25 | Phase 5 done. Improvise (3-slide carousel), Trajectory (timeline + 4-photo team carousel) and Promise sections. Promise component named `OurPromise` to avoid shadowing the global `Promise`.                                                                         |

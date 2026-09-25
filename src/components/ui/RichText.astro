@@ -1,0 +1,25 @@
+---
+/**
+ * Renders copy with `**bold**` markers as <strong>. Keeps editable copy in
+ * src/content/*.ts free of HTML.
+ */
+interface Props {
+  text: string;
+  strongClass?: string;
+}
+
+const { text, strongClass = 'font-bold text-ink' } = Astro.props;
+
+const segments = text
+  .split(/(\*\*[^*]+\*\*)/g)
+  .filter(Boolean)
+  .map((part) =>
+    part.startsWith('**') && part.endsWith('**')
+      ? { bold: true, value: part.slice(2, -2) }
+      : { bold: false, value: part },
+  );
+---
+
+{segments.map((segment) =>
+  segment.bold ? <strong class={strongClass}>{segment.value}</strong> : segment.value,
+)}

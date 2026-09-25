@@ -1,0 +1,30 @@
+---
+import Container from '../ui/Container.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import RichText from '../ui/RichText.astro';
+import { promise } from '../../content/story';
+---
+
+<section id="garantia" class="bg-beige py-16 lg:py-24">
+  <Container>
+    <Eyebrow>{promise.eyebrow}</Eyebrow>
+    <h2 class="mt-3 text-4xl leading-[1.02] font-bold text-balance text-ink sm:text-5xl xl:text-[3.5rem]">
+      {promise.title}
+    </h2>
+    <p class="mt-5 max-w-2xl text-base text-ink/90 sm:text-lg">
+      <RichText text={promise.lead} />
+    </p>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:gap-8">
+      {promise.pillars.map((pillar) => (
+        <article class="rounded-3xl bg-white p-7 sm:p-9">
+          <Eyebrow>{pillar.label}</Eyebrow>
+          <h3 class="mt-3 text-2xl leading-tight font-bold text-balance text-ink">
+            {pillar.title}
+          </h3>
+          <p class="mt-4 text-base text-ink/90">{pillar.body}</p>
+        </article>
+      ))}
+    </div>
+  </Container>
+</section>
