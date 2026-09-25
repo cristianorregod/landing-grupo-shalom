@@ -1,11 +1,87 @@
 ---
+// Temporary component showcase until sections are built (Phase 3+).
 import Base from '../layouts/Base.astro';
-import { site } from '../config/site';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import SectionHeading from '../components/ui/SectionHeading.astro';
+import Carousel from '../components/ui/Carousel.astro';
+import Tabs from '../components/ui/Tabs.astro';
+import ResponsiveImage from '../components/ui/ResponsiveImage.astro';
+import team1 from '../assets/images/team/team-1.webp';
+import team2 from '../assets/images/team/team-2.webp';
+import team3 from '../assets/images/team/team-3.webp';
+import team4 from '../assets/images/team/team-4.webp';
+import press1 from '../assets/images/press/press-1.webp';
+import press2 from '../assets/images/press/press-2.webp';
+import press3 from '../assets/images/press/press-3.webp';
+import press4 from '../assets/images/press/press-4.webp';
+
+const team = [team1, team2, team3, team4];
+const press = [press1, press2, press3, press4];
 ---
 
 <Base>
-  <main class="mx-auto max-w-content px-4 py-16">
-    <h1 class="text-4xl font-bold">{site.name}</h1>
-    <p class="mt-4 text-eyebrow">Base layout ready.</p>
+  <main class="space-y-16 py-16">
+    <Container>
+      <SectionHeading eyebrow="Trayectoria" title="De 1.500 anchetas a 150.000 mercados.">
+        Once años de crecimiento sostenido.
+      </SectionHeading>
+      <div class="mt-6 flex flex-wrap gap-3 bg-navy p-6">
+        <Button href="#">Solicitar cotización</Button>
+        <Button href="#" variant="outline-light">
+          Conozca nuestra capacidad
+        </Button>
+        <Button href="#" variant="light" size="sm">
+          Solicitar cotización
+        </Button>
+        <Button href="#" variant="blue" size="sm">
+          Conocer soluciones →
+        </Button>
+        <Button href={null}>Pendiente</Button>
+      </div>
+    </Container>
+
+    <Container>
+      <Carousel label="Equipo Shalom" autoplay={5000}>
+        {team.map((img, i) => (
+          <li class="w-full">
+            <ResponsiveImage
+              src={img}
+              alt={`Equipo ${i + 1}`}
+              sizes="(min-width: 1216px) 1120px, 100vw"
+              class="aspect-4/3 w-full rounded-3xl object-cover md:aspect-video"
+            />
+          </li>
+        ))}
+      </Carousel>
+    </Container>
+
+    <Container>
+      <Carousel label="Prensa" arrows gapClass="gap-3">
+        {press.map((img, i) => (
+          <li class="w-4/5 rounded-xl border-2 border-brand-blue p-2 sm:w-[45%] lg:w-[23.5%]">
+            <ResponsiveImage src={img} alt={`Nota ${i + 1}`} sizes="300px" class="w-full" />
+            <p class="mt-2 text-xs">Nota de prensa {i + 1}</p>
+          </li>
+        ))}
+      </Carousel>
+    </Container>
+
+    <Container class="bg-beige py-10">
+      <Tabs
+        label="Tipo de negocio"
+        tabs={[
+          { id: 'canal-tradicional', label: 'Canal tradicional' },
+          { id: 'minimercados', label: 'Minimercados / supermercados' },
+          { id: 'distribuidores', label: 'Distribuidores regionales' },
+          { id: 'horeca', label: 'HoReCa / institucional' },
+        ]}
+      >
+        <p slot="canal-tradicional">Panel canal tradicional</p>
+        <p slot="minimercados">Panel minimercados</p>
+        <p slot="distribuidores">Panel distribuidores</p>
+        <p slot="horeca">Panel HoReCa</p>
+      </Tabs>
+    </Container>
   </main>
 </Base>

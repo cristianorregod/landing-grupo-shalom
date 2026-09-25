@@ -1,0 +1,63 @@
+---
+/**
+ * Link-styled button. When `href` is null (pending client link), it renders a
+ * non-interactive element with a disabled look so the layout stays intact.
+ */
+interface Props {
+  href: string | null;
+  variant?: 'primary' | 'outline-light' | 'light' | 'blue';
+  size?: 'sm' | 'md';
+  external?: boolean;
+  class?: string;
+  'data-track'?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  external = href?.startsWith('http') ?? false,
+  class: className,
+  ...attrs
+} = Astro.props;
+
+const variants = {
+  primary: 'bg-brand-green text-white hover:bg-brand-green/90 uppercase',
+  'outline-light': 'border-2 border-white text-white hover:bg-white/10 uppercase',
+  light: 'bg-white text-brand-blue hover:bg-white/90',
+  blue: 'bg-brand-blue text-white hover:bg-brand-blue/90 uppercase',
+} as const;
+
+const sizes = {
+  sm: 'px-5 py-2.5 text-xs',
+  md: 'px-6 py-3 text-sm',
+} as const;
+
+const classes = [
+  'inline-flex items-center justify-center gap-2 rounded-full font-bold tracking-wide transition-colors',
+  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current',
+  variants[variant],
+  sizes[size],
+  className,
+];
+---
+
+{href ? (
+  <a
+    href={href}
+    class:list={classes}
+    {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
+    {...attrs}
+  >
+    <slot />
+  </a>
+) : (
+  <span
+    class:list={[classes, 'cursor-not-allowed opacity-60']}
+    aria-disabled="true"
+    title="Enlace disponible próximamente"
+    {...attrs}
+  >
+    <slot />
+  </span>
+)}

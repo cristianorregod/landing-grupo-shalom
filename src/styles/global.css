@@ -20,7 +20,7 @@
   --color-cta-from: #4983cb;
   --color-cta-to: #25253b;
 
-  --container-content: 64rem;
+  --container-content: 76rem;
 }
 
 @layer base {
@@ -37,5 +37,12 @@
 
   body {
     @apply bg-white font-sans text-ink antialiased;
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }

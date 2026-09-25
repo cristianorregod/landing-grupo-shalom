@@ -1,0 +1,18 @@
+---
+interface Props {
+  tone?: 'blue' | 'green' | 'light';
+  class?: string;
+}
+
+const { tone = 'blue', class: className } = Astro.props;
+
+const tones = {
+  blue: 'text-eyebrow',
+  green: 'text-brand-green',
+  light: 'text-white/80',
+} as const;
+---
+
+<p class:list={['text-xs font-medium tracking-[0.25em] uppercase', tones[tone], className]}>
+  <slot />
+</p>

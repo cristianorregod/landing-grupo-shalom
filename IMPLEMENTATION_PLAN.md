@@ -79,17 +79,19 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 - [x] GA4 snippet wired to `site.ts`, rendered only when an ID is set (verified with a test ID) ⏳ P-C8
 - [x] Smooth scroll for anchors with `scroll-padding-top` for the fixed header
 - [x] `prefers-reduced-motion` support for smooth scroll
-- [ ] `prefers-reduced-motion` support for carousel and video autoplay (Phases 2 and 4)
+- [x] `prefers-reduced-motion` support for carousel autoplay (Phase 2)
+- [ ] `prefers-reduced-motion` support for video autoplay (Phase 4)
 
 ## Phase 2 — Shared UI components (2 h)
 
-- [ ] `Container`
-- [ ] `Button` (variants: primary green, outline white, solid white, blue pill; renders `<a>` or `<button>`)
-- [ ] `Eyebrow` (small uppercase letter-spaced label)
-- [ ] `SectionHeading`
-- [ ] `Carousel` (scroll-snap, arrows, dots, keyboard, optional autoplay, touch)
-- [ ] `Tabs` (ARIA `tablist`, keyboard navigation, horizontally scrollable on mobile)
-- [ ] `ResponsiveImage` wrapper over `astro:assets` (AVIF/WebP, `srcset`, lazy by default)
+- [x] `Container`
+- [x] `Button` (variants: primary green, outline white, solid white, blue pill; renders `<a>` or `<button>`)
+- [x] `Eyebrow` (small uppercase letter-spaced label)
+- [x] `SectionHeading`
+- [x] `Carousel` (scroll-snap, arrows, dots, keyboard, optional autoplay, touch)
+- [x] `Tabs` (ARIA `tablist`, keyboard navigation, horizontally scrollable on mobile)
+- [x] `ResponsiveImage` wrapper over `astro:assets` (AVIF/WebP, `srcset`, lazy by default)
+- [x] Behavior verified in Chromium (Playwright): arrows, dots, wrap-around, autoplay, reduced motion, tab keyboard navigation, `#horeca` deep link, no horizontal overflow at 390 px
 
 ## Phase 3 — Header and floating WhatsApp (1.5 h)
 
@@ -230,8 +232,9 @@ Mirrors the client pendings in the scope document. Update the status column as i
 
 ## Log
 
-| Date       | Note                                                                                                                                                                                                                    |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-09-24 | Plan created. Assets analyzed; client logos and hero background to be extracted from the `.ai`.                                                                                                                         |
-| 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped. |
-| 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                |
+| Date       | Note                                                                                                                                                                                                                                                              |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-09-24 | Plan created. Assets analyzed; client logos and hero background to be extracted from the `.ai`.                                                                                                                                                                   |
+| 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped.                                           |
+| 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                                                          |
+| 2026-09-24 | Phase 2 done. UI kit: Container, Button (null `href` renders a disabled placeholder), Eyebrow, SectionHeading, ResponsiveImage (AVIF/WebP, WebP fallback because sources have alpha), Carousel and Tabs as custom elements. `sharp` added as a direct dependency. |

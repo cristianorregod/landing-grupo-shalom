@@ -1,0 +1,113 @@
+---
+/**
+ * Accessible tabs (WAI-ARIA tablist). Each tab's panel is passed as a named
+ * slot matching the tab id. A URL hash equal to a tab id (e.g. `#horeca`)
+ * selects that tab, which lets nav links deep-link into a specific tab.
+ */
+interface Tab {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  tabs: Tab[];
+  label: string;
+  defaultId?: string;
+  class?: string;
+}
+
+const { tabs, label, defaultId = tabs[0]?.id, class: className } = Astro.props;
+
+const panels = await Promise.all(
+  tabs.map(async (tab) => ({ ...tab, html: await Astro.slots.render(tab.id) })),
+);
+---
+
+<shalom-tabs class:list={['block', className]}>
+  <div class="flex justify-center">
+    <div
+      role="tablist"
+      aria-label={label}
+      class="flex max-w-full gap-1 overflow-x-auto rounded-full border border-ink/40 p-1.5 scrollbar-none"
+    >
+      {tabs.map((tab) => {
+        const selected = tab.id === defaultId;
+        return (
+          <button
+            type="button"
+            role="tab"
+            id={tab.id}
+            aria-controls={`${tab.id}-panel`}
+            aria-selected={selected ? 'true' : 'false'}
+            tabindex={selected ? 0 : -1}
+            class="shrink-0 rounded-full px-4 py-2 text-sm whitespace-nowrap text-ink transition-colors hover:text-brand-blue aria-selected:bg-brand-blue aria-selected:text-white sm:px-5 sm:text-base"
+          >
+            {tab.label}
+          </button>
+        );
+      })}
+    </div>
+  </div>
+
+  {panels.map((panel) => (
+    <div
+      role="tabpanel"
+      id={`${panel.id}-panel`}
+      aria-labelledby={panel.id}
+      tabindex="0"
+      hidden={panel.id !== defaultId}
+      class="mt-8"
+      set:html={panel.html}
+    />
+  ))}
+</shalom-tabs>
+
+<script>
+  class ShalomTabs extends HTMLElement {
+    private tabs: HTMLButtonElement[] = [];
+
+    connectedCallback() {
+      this.tabs = Array.from(this.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+      this.tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => this.select(i));
+        tab.addEventListener('keydown', (event) => this.onKeydown(event, i));
+      });
+      window.addEventListener('hashchange', this.syncFromHash);
+      this.syncFromHash();
+    }
+
+    private syncFromHash = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      const index = this.tabs.findIndex((tab) => tab.id === id);
+      if (index >= 0) this.select(index, false);
+    };
+
+    private onKeydown(event: KeyboardEvent, index: number) {
+      const last = this.tabs.length - 1;
+      const next: Record<string, number> = {
+        ArrowRight: index === last ? 0 : index + 1,
+        ArrowLeft: index === 0 ? last : index - 1,
+        Home: 0,
+        End: last,
+      };
+      if (!(event.key in next)) return;
+      event.preventDefault();
+      this.select(next[event.key]);
+    }
+
+    private select(index: number, focus = true) {
+      this.tabs.forEach((tab, i) => {
+        const selected = i === index;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        const panel = this.querySelector<HTMLElement>(`#${CSS.escape(tab.id)}-panel`);
+        if (panel) panel.hidden = !selected;
+      });
+      const active = this.tabs[index];
+      active.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      if (focus) active.focus();
+    }
+  }
+
+  customElements.define('shalom-tabs', ShalomTabs);
+</script>
