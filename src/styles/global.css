@@ -1,0 +1,41 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/montserrat';
+
+/*
+ * Design tokens.
+ * Blue comes from the delivered sRGB exports (icons, logos).
+ * The remaining values were sampled from the design PDF render.
+ * PENDING P-C9: validate hex values with the designer.
+ */
+@theme {
+  --font-sans: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-blue: #326bd8;
+  --color-brand-green: #65a63e;
+  --color-ink: #434149;
+  --color-navy: #303262;
+  --color-sky: #d4e1f5;
+  --color-eyebrow: #6f87c7;
+  --color-beige: #efe9e8;
+  --color-cta-from: #4983cb;
+  --color-cta-to: #25253b;
+
+  --container-content: 64rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-white font-sans text-ink antialiased;
+  }
+}
