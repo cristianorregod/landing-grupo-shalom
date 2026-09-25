@@ -1,0 +1,44 @@
+---
+import Container from '../ui/Container.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import Tabs from '../ui/Tabs.astro';
+import TabPanel from '../ui/TabPanel.astro';
+import Button from '../ui/Button.astro';
+import { site } from '../../config/site';
+import { solutions, solutionsSection } from '../../content/solutions';
+---
+
+<section id="soluciones" class="border-t border-ink/10 bg-beige py-16 lg:py-24">
+  <Container>
+    <div class="text-center">
+      <Eyebrow>{solutionsSection.eyebrow}</Eyebrow>
+      <h2 class="mt-3 text-3xl leading-tight font-bold text-balance text-ink sm:text-4xl xl:text-[2.75rem]">
+        {solutionsSection.title}
+      </h2>
+    </div>
+
+    <Tabs label="Tipo de negocio" tabs={solutions} class="mt-10">
+      {solutions.map((solution, i) => (
+        <TabPanel id={solution.id} selected={i === 0} class="grid gap-6 md:grid-cols-2 lg:gap-8">
+          <article class="rounded-3xl bg-white p-7 sm:p-9">
+            <Eyebrow>Dolor típico</Eyebrow>
+            <h3 class="mt-3 text-2xl leading-tight font-bold text-balance text-ink">
+              {solution.pain.title}
+            </h3>
+            <p class="mt-4 text-base text-ink/90">{solution.pain.body}</p>
+          </article>
+          <article class="flex flex-col items-start rounded-3xl bg-sky p-7 sm:p-9">
+            <Eyebrow>Cómo responde Shalom</Eyebrow>
+            <h3 class="mt-3 text-2xl leading-tight font-bold text-balance text-ink">
+              {solution.answer.title}
+            </h3>
+            <p class="mt-4 text-base text-ink/90">{solution.answer.body}</p>
+            <Button href={solution.href ?? site.links.quote} variant="blue" size="sm" class="mt-6">
+              Conocer soluciones →
+            </Button>
+          </article>
+        </TabPanel>
+      ))}
+    </Tabs>
+  </Container>
+</section>

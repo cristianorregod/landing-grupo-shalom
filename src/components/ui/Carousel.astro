@@ -29,7 +29,8 @@ const {
     <ul
       data-track
       class:list={[
-        'flex snap-x snap-mandatory overflow-x-auto scroll-smooth scrollbar-none motion-reduce:scroll-auto',
+        // Slide sizing lives in CSS (not JS) to avoid layout shift before hydration.
+        'flex snap-x snap-mandatory overflow-x-auto scroll-smooth scrollbar-none motion-reduce:scroll-auto *:shrink-0 *:snap-start',
         gapClass,
       ]}
       tabindex="0"
@@ -42,7 +43,7 @@ const {
         <button
           type="button"
           data-prev
-          class="absolute top-1/2 left-0 hidden size-10 -translate-x-full -translate-y-1/2 items-center justify-center text-brand-blue disabled:opacity-30 md:flex"
+          class="absolute top-1/2 left-0 hidden size-10 -translate-x-full -translate-y-1/2 items-center justify-center text-brand-blue disabled:opacity-30 lg:flex"
           aria-label="Anterior"
         >
           <svg
@@ -59,7 +60,7 @@ const {
         <button
           type="button"
           data-next
-          class="absolute top-1/2 right-0 hidden size-10 translate-x-full -translate-y-1/2 items-center justify-center text-brand-blue disabled:opacity-30 md:flex"
+          class="absolute top-1/2 right-0 hidden size-10 translate-x-full -translate-y-1/2 items-center justify-center text-brand-blue disabled:opacity-30 lg:flex"
           aria-label="Siguiente"
         >
           <svg
@@ -103,7 +104,6 @@ const {
       this.nextBtn = this.querySelector('[data-next]');
 
       this.slides.forEach((slide, i) => {
-        slide.classList.add('snap-start', 'shrink-0');
         slide.setAttribute('role', 'group');
         slide.setAttribute('aria-roledescription', 'diapositiva');
         slide.setAttribute('aria-label', `${i + 1} de ${this.slides.length}`);
@@ -135,7 +135,9 @@ const {
     }
 
     private layout() {
-      const perView = Math.max(1, Math.floor((this.track.clientWidth + 1) / this.step));
+      // The last visible slide has no trailing gap, so add one gap before dividing.
+      const gap = this.step - (this.slides[0]?.offsetWidth ?? this.step);
+      const perView = Math.max(1, Math.floor((this.track.clientWidth + gap + 1) / this.step));
       this.pages = Math.max(1, this.slides.length - perView + 1);
       this.renderDots();
       this.update();

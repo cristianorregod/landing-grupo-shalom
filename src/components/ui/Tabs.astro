@@ -1,8 +1,9 @@
 ---
 /**
- * Accessible tabs (WAI-ARIA tablist). Each tab's panel is passed as a named
- * slot matching the tab id. A URL hash equal to a tab id (e.g. `#horeca`)
- * selects that tab, which lets nav links deep-link into a specific tab.
+ * Accessible tabs (WAI-ARIA tablist): 2x2 grid below lg, single pill row from lg.
+ * Panels are `<TabPanel id>` children (default slot) whose id matches a tab id.
+ * A URL hash equal to a tab id (e.g. `#horeca`) selects that tab, which lets
+ * nav links deep-link into a specific tab.
  */
 interface Tab {
   id: string;
@@ -17,10 +18,6 @@ interface Props {
 }
 
 const { tabs, label, defaultId = tabs[0]?.id, class: className } = Astro.props;
-
-const panels = await Promise.all(
-  tabs.map(async (tab) => ({ ...tab, html: await Astro.slots.render(tab.id) })),
-);
 ---
 
 <shalom-tabs class:list={['block', className]}>
@@ -28,7 +25,7 @@ const panels = await Promise.all(
     <div
       role="tablist"
       aria-label={label}
-      class="flex max-w-full gap-1 overflow-x-auto rounded-full border border-ink/40 p-1.5 scrollbar-none"
+      class="grid w-full grid-cols-2 gap-1 rounded-3xl border border-ink/40 p-1.5 lg:flex lg:w-auto lg:max-w-full lg:rounded-full"
     >
       {tabs.map((tab) => {
         const selected = tab.id === defaultId;
@@ -40,7 +37,7 @@ const panels = await Promise.all(
             aria-controls={`${tab.id}-panel`}
             aria-selected={selected ? 'true' : 'false'}
             tabindex={selected ? 0 : -1}
-            class="shrink-0 rounded-full px-4 py-2 text-sm whitespace-nowrap text-ink transition-colors hover:text-brand-blue aria-selected:bg-brand-blue aria-selected:text-white sm:px-5 sm:text-base"
+            class="rounded-full px-3 py-2 text-sm leading-tight text-ink transition-colors hover:text-brand-blue aria-selected:bg-brand-blue aria-selected:text-white sm:px-5 sm:text-base lg:shrink-0 lg:whitespace-nowrap"
           >
             {tab.label}
           </button>
@@ -49,17 +46,7 @@ const panels = await Promise.all(
     </div>
   </div>
 
-  {panels.map((panel) => (
-    <div
-      role="tabpanel"
-      id={`${panel.id}-panel`}
-      aria-labelledby={panel.id}
-      tabindex="0"
-      hidden={panel.id !== defaultId}
-      class="mt-8"
-      set:html={panel.html}
-    />
-  ))}
+  <slot />
 </shalom-tabs>
 
 <script>
@@ -103,9 +90,8 @@ const panels = await Promise.all(
         const panel = this.querySelector<HTMLElement>(`#${CSS.escape(tab.id)}-panel`);
         if (panel) panel.hidden = !selected;
       });
-      const active = this.tabs[index];
-      active.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-      if (focus) active.focus();
+      // No scrollIntoView here: it would cancel the anchor scroll of nav deep links.
+      if (focus) this.tabs[index].focus({ preventScroll: true });
     }
   }
 

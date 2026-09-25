@@ -7,12 +7,12 @@ import Clients from '../components/sections/Clients.astro';
 import Improvise from '../components/sections/Improvise.astro';
 import Trajectory from '../components/sections/Trajectory.astro';
 import OurPromise from '../components/sections/OurPromise.astro';
+import Solutions from '../components/sections/Solutions.astro';
+import Press from '../components/sections/Press.astro';
 import Container from '../components/ui/Container.astro';
 
 // Temporary stubs keep every anchor in place until each section is built.
 const stubs = [
-  { id: 'soluciones', label: 'Solutions (Phase 6)', tone: 'bg-beige' },
-  { id: 'prensa', label: 'Press (Phase 6)', tone: 'bg-white' },
   { id: 'catalogo', label: 'Catalog (Phase 7)', tone: 'bg-beige' },
   { id: 'quienes-somos', label: 'About (Phase 7)', tone: 'bg-white' },
   { id: 'contacto', label: 'Final CTA (Phase 7)', tone: 'bg-cta-from text-white' },
@@ -27,6 +27,8 @@ const stubs = [
     <Improvise />
     <Trajectory />
     <OurPromise />
+    <Solutions />
+    <Press />
     {stubs.map((stub) => (
       <section id={stub.id} class:list={['flex min-h-[70vh] items-center', stub.tone]}>
         <Container>

@@ -132,12 +132,15 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 
 ## Phase 6 — Solutions and Press (1.5 h)
 
-- [ ] Solutions section with 4 tabs; content from `content/solutions.ts`
-- [ ] Tab "Canal tradicional" with real copy
-- [ ] Tabs "Minimercados / supermercados", "Distribuidores regionales", "HoReCa / institucional" ⏳ P-C1
-- [ ] "Conocer soluciones →" button per tab ⏳ P-L8
-- [ ] Press carousel with 4 cards from `content/press.ts` ⏳ P-C3
-- [ ] "Leer más" links, opening in a new tab ⏳ P-L9
+- [x] Solutions section with 4 tabs; content from `content/solutions.ts`
+- [x] Tab "Canal tradicional" with real copy
+- [x] Tabs "Minimercados / supermercados", "Distribuidores regionales", "HoReCa / institucional" with draft copy ⏳ P-C1
+- [x] "Conocer soluciones →" button per tab ⏳ P-L8
+- [x] Press carousel with 4 cards from `content/press.ts` ⏳ P-C3
+- [x] "Leer más" links, opening in a new tab (disabled while null) ⏳ P-L9
+- [x] Tabs: 2x2 grid below 1024 px, pill row from 1024 px; panels via `TabPanel` (dynamic named slots are not supported inside `map`)
+- [x] Carousel fixes: slide sizing in CSS (no layout shift before hydration), correct per-view count with gaps, arrows from 1024 px
+- [x] Verified in Chromium: no overflow at 390/768/1024/1440, nav "HoReCa" scrolls to Solutions and opens its tab
 
 ## Phase 7 — Catalog, About, Final CTA, Footer (1.5 h)
 
@@ -249,3 +252,4 @@ Mirrors the client pendings in the scope document. Update the status column as i
 | 2026-09-24 | Phase 3 done. Fixed header with scroll-spy, mobile menu on native `<dialog>`, floating WhatsApp button, navigation data in `src/content/navigation.ts`. Desktop nav starts at 1280 px because 6 links + CTA do not fit at 1024 px.                                    |
 | 2026-09-25 | Phase 4 done. Hero with YouTube background (test video `IXWEQHCKR20` in `site.ts`), custom controls, fallbacks, and client logos strip. Fixed a Phase 3 bug: `hidden` passed to `Button` lost against its base `inline-flex`; display utilities must go on a wrapper. |
 | 2026-09-25 | Phase 5 done. Improvise (3-slide carousel), Trajectory (timeline + 4-photo team carousel) and Promise sections. Promise component named `OurPromise` to avoid shadowing the global `Promise`.                                                                         |
+| 2026-09-25 | Phase 6 done. Solutions (4 tabs, 3 with draft copy pending client validation) and Press carousel (3/2/1 cards per view). Fixed Carousel CLS and dot count, and a Tabs bug where `scrollIntoView` cancelled the nav anchor scroll.                                     |
