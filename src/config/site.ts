@@ -11,7 +11,6 @@ type Href = string | null;
 
 export interface SiteConfig {
   name: string;
-  url: string;
   locale: string;
   title: string;
   description: string;
@@ -58,8 +57,6 @@ const anchors = {
 
 export const site: SiteConfig = {
   name: 'Grupo Shalom',
-  // PENDING P-C7: final domain.
-  url: 'https://gruposhalom.com.co',
   locale: 'es-CO',
   title: 'Grupo Shalom | Garantía & Capacidad en distribución de consumo masivo',
   description:

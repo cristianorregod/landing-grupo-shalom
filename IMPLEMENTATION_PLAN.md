@@ -71,14 +71,15 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 
 ## Phase 1 — Base layout and SEO (1 h)
 
-- [ ] `layouts/Base.astro` with `lang="es"`, meta title and description
-- [ ] Open Graph and Twitter meta tags
-- [ ] OG image (1200×630) built from logo + hero background
-- [ ] Favicon set from isotype (`favicon.svg`/`.ico`, `apple-touch-icon`)
-- [ ] `robots.txt` and sitemap
-- [ ] GA4 snippet wired to `site.ts`, rendered only when an ID is set ⏳ P-C8
-- [ ] Smooth scroll for anchors with `scroll-padding-top` for the fixed header
-- [ ] `prefers-reduced-motion` support (disables smooth scroll and autoplay)
+- [x] `layouts/Base.astro` with `lang="es"`, meta title and description
+- [x] Open Graph and Twitter meta tags
+- [x] OG image (1200×630) built from logo + hero background
+- [x] Favicon set from isotype (`favicon.ico`, 32 px PNG, `apple-touch-icon`, manifest icons; no SVG source available)
+- [x] `robots.txt` and sitemap
+- [x] GA4 snippet wired to `site.ts`, rendered only when an ID is set (verified with a test ID) ⏳ P-C8
+- [x] Smooth scroll for anchors with `scroll-padding-top` for the fixed header
+- [x] `prefers-reduced-motion` support for smooth scroll
+- [ ] `prefers-reduced-motion` support for carousel and video autoplay (Phases 2 and 4)
 
 ## Phase 2 — Shared UI components (2 h)
 
@@ -218,13 +219,14 @@ Mirrors the client pendings in the scope document. Update the status column as i
 
 ## Risks
 
-| Risk                                           | Impact | Mitigation                                                                                                                              |
-| ---------------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------- |
-| YouTube autoplay vs. Lighthouse ≥ 90 on mobile | High   | Poster as LCP, iframe injected after load and on visibility; inform the client in writing that immediate autoplay compromises the score |
-| Hero "video only" removes visible H1           | Medium | Recommend keeping text over video; keep a visually hidden H1 if video only is chosen                                                    |
-| Client logos without authorization             | Medium | Config flag to hide the strip                                                                                                           |
-| Hosting not defined                            | Medium | Deploy to a preview URL first; decide before 2026-09-27                                                                                 |
-| Late pendings                                  | Low    | Data-driven config; delivery shifts per scope conditions                                                                                |
+| Risk                                                   | Impact | Mitigation                                                                                                                              |
+| ------------------------------------------------------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| YouTube autoplay vs. Lighthouse ≥ 90 on mobile         | High   | Poster as LCP, iframe injected after load and on visibility; inform the client in writing that immediate autoplay compromises the score |
+| Hero "video only" removes visible H1                   | Medium | Recommend keeping text over video; keep a visually hidden H1 if video only is chosen                                                    |
+| Client logos without authorization                     | Medium | Config flag to hide the strip                                                                                                           |
+| Hosting not defined                                    | Medium | Deploy to a preview URL first; decide before 2026-09-27                                                                                 |
+| Late pendings                                          | Low    | Data-driven config; delivery shifts per scope conditions                                                                                |
+| GA4 without a cookie consent banner (Ley 1581 de 2012) | Medium | Consent banner is out of scope; flag to the client before enabling GA4                                                                  |
 
 ## Log
 
@@ -232,3 +234,4 @@ Mirrors the client pendings in the scope document. Update the status column as i
 | ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 2026-09-24 | Plan created. Assets analyzed; client logos and hero background to be extracted from the `.ai`.                                                                                                                         |
 | 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped. |
+| 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                |
