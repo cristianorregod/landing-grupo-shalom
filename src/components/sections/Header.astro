@@ -1,0 +1,152 @@
+---
+import { Image } from 'astro:assets';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import { site } from '../../config/site';
+import { navItems } from '../../content/navigation';
+import logo from '../../assets/logos/shalom-color.webp';
+---
+
+<header class="fixed inset-x-0 top-0 z-40 border-b border-brand-blue/30 bg-white/95 backdrop-blur-sm">
+  <Container class="flex h-16 items-center justify-between gap-6 lg:h-20">
+    <a href="#top" class="shrink-0" aria-label={`${site.name}, ir al inicio`}>
+      <Image
+        src={logo}
+        alt={site.name}
+        height={48}
+        densities={[1, 2]}
+        loading="eager"
+        class="h-10 w-auto lg:h-12"
+      />
+    </a>
+
+    <nav aria-label="Principal" class="hidden xl:block">
+      <ul class="flex items-center gap-7">
+        {navItems.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              data-nav-section={item.section}
+              class="block border-b-2 border-transparent py-1 text-sm whitespace-nowrap text-brand-blue transition-colors hover:text-brand-green aria-[current=true]:border-brand-green aria-[current=true]:font-bold aria-[current=true]:text-brand-green"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <Button href={site.links.quote} size="sm" class="hidden sm:inline-flex">
+        Solicitar cotización
+      </Button>
+      <button
+        type="button"
+        data-menu-open
+        class="flex size-10 items-center justify-center rounded-full text-brand-blue xl:hidden"
+        aria-label="Abrir menú"
+        aria-haspopup="dialog"
+        aria-controls="mobile-menu"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          class="size-7"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          aria-hidden="true"
+        >
+          <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+  </Container>
+</header>
+
+<dialog
+  id="mobile-menu"
+  aria-label="Menú"
+  class="m-0 h-dvh max-h-none w-full max-w-none bg-white p-0 backdrop:bg-navy/40 xl:hidden"
+>
+  <div class="flex h-16 items-center justify-between border-b border-brand-blue/30 px-4 sm:px-8">
+    <Image src={logo} alt={site.name} height={48} densities={[1, 2]} class="h-10 w-auto" />
+    <button
+      type="button"
+      data-menu-close
+      class="flex size-10 items-center justify-center rounded-full text-brand-blue"
+      aria-label="Cerrar menú"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        class="size-7"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"></path>
+      </svg>
+    </button>
+  </div>
+  <nav aria-label="Principal móvil" class="px-4 py-6 sm:px-8">
+    <ul class="divide-y divide-ink/10">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            data-nav-section={item.section}
+            class="block py-4 text-lg text-brand-blue aria-[current=true]:font-bold aria-[current=true]:text-brand-green"
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <Button href={site.links.quote} class="mt-8 w-full">
+      Solicitar cotización
+    </Button>
+  </nav>
+</dialog>
+
+<script>
+  const menu = document.querySelector<HTMLDialogElement>('#mobile-menu')!;
+  const openBtn = document.querySelector<HTMLButtonElement>('[data-menu-open]')!;
+
+  openBtn.addEventListener('click', () => menu.showModal());
+  menu.querySelector('[data-menu-close]')?.addEventListener('click', () => menu.close());
+  // Close after choosing a destination so the anchor scroll is visible.
+  menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => menu.close()));
+  // Clicking the backdrop closes the menu.
+  menu.addEventListener('click', (event) => {
+    if (event.target === menu) menu.close();
+  });
+  // Never leave the modal open when switching to the desktop layout.
+  window.matchMedia('(min-width: 80rem)').addEventListener('change', (event) => {
+    if (event.matches) menu.close();
+  });
+
+  // Highlight the nav item whose section is currently in view.
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-section]');
+  const sectionIds = [...new Set([...links].map((link) => link.dataset.navSection!))];
+  const sections = sectionIds
+    .map((id) => document.getElementById(id))
+    .filter((el): el is HTMLElement => el !== null);
+
+  const setActive = (id: string | null) => {
+    links.forEach((link) => {
+      if (link.dataset.navSection === id) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting);
+      if (visible.length) setActive(visible[visible.length - 1].target.id);
+      else if (window.scrollY < window.innerHeight / 2) setActive(null);
+    },
+    // A thin band just below the header decides which section is "current".
+    { rootMargin: '-25% 0px -70% 0px' },
+  );
+  sections.forEach((section) => observer.observe(section));
+</script>

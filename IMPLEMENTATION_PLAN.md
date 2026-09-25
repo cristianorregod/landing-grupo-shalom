@@ -95,14 +95,16 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 
 ## Phase 3 — Header and floating WhatsApp (1.5 h)
 
-- [ ] Fixed header with logo, nav links and "Solicitar cotización" CTA ⏳ P-L1
-- [ ] Active link highlight on scroll (IntersectionObserver)
-- [ ] Mobile hamburger menu (drawer, focus trap, `Esc` closes, body scroll lock)
-- [ ] Nav "Garantía & Capacidad", "Trayectoria", "Catálogo" → internal anchors
-- [ ] Nav "HoReCa" ⏳ P-L2 (default: Solutions section with HoReCa tab preselected)
-- [ ] Nav "Shalom" ⏳ P-L3 (default: About anchor)
-- [ ] Nav "Contacto" ⏳ P-L4 (default: final CTA anchor)
-- [ ] Floating WhatsApp button with `wa.me` link and prefilled message ⏳ P-L21
+- [x] Fixed header with logo, nav links and "Solicitar cotización" CTA ⏳ P-L1
+- [x] Active link highlight on scroll (IntersectionObserver)
+- [x] Mobile hamburger menu (native `<dialog>`: focus trap, `Esc` closes, body scroll lock); full nav from `xl` (1280 px), hamburger below
+- [x] Nav "Garantía & Capacidad", "Trayectoria", "Catálogo" → internal anchors
+- [x] Nav "HoReCa" ⏳ P-L2 (default: Solutions section with HoReCa tab preselected)
+- [x] Nav "Shalom" ⏳ P-L3 (default: About anchor)
+- [x] Nav "Contacto" ⏳ P-L4 (default: final CTA anchor)
+- [x] Floating WhatsApp button with `wa.me` link and prefilled message ⏳ P-L21 (points to `#contacto` until a number is set)
+- [x] Page skeleton with every section anchor as a stub (replaced in Phases 4–7)
+- [x] Verified in Chromium: no overflow at 1024/1280/1440, scroll-spy, anchor offset, menu open/Esc/link close, focus return
 
 ## Phase 4 — Hero and client logos (2 h)
 
@@ -201,7 +203,7 @@ Mirrors the client pendings in the scope document. Update the status column as i
 | P-L18 | Footer             | "Bogotá, Colombia"                                       | `contact.mapsUrl`                     | Plain text                    | Pending |
 | P-L19 | Footer             | Social networks                                          | `social[]`                            | Hidden                        | Pending |
 | P-L20 | Footer             | Data policy (Ley 1581 de 2012)                           | `links.privacyPolicy`                 | `#` (disabled style)          | Pending |
-| P-L21 | Floating button    | WhatsApp number + message                                | `contact.whatsapp`                    | Button rendered, no number    | Pending |
+| P-L21 | Floating button    | WhatsApp number + message                                | `contact.whatsapp`                    | Button links to `#contacto`   | Pending |
 
 ### Content and access (P-C)
 
@@ -238,3 +240,4 @@ Mirrors the client pendings in the scope document. Update the status column as i
 | 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped.                                           |
 | 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                                                          |
 | 2026-09-24 | Phase 2 done. UI kit: Container, Button (null `href` renders a disabled placeholder), Eyebrow, SectionHeading, ResponsiveImage (AVIF/WebP, WebP fallback because sources have alpha), Carousel and Tabs as custom elements. `sharp` added as a direct dependency. |
+| 2026-09-24 | Phase 3 done. Fixed header with scroll-spy, mobile menu on native `<dialog>`, floating WhatsApp button, navigation data in `src/content/navigation.ts`. Desktop nav starts at 1280 px because 6 links + CTA do not fit at 1024 px.                                |
