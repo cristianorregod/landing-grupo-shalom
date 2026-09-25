@@ -1,0 +1,331 @@
+---
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import ResponsiveImage from '../ui/ResponsiveImage.astro';
+import { site } from '../../config/site';
+import { hero } from '../../content/hero';
+import poster from '../../assets/images/hero-earth.webp';
+
+const { youtubeId, variant, capacityHref } = site.hero;
+const videoOnly = variant === 'video-only';
+---
+
+<section id="hero" class="bg-navy text-white">
+  <shalom-hero
+    data-youtube-id={youtubeId ?? undefined}
+    class="relative isolate flex min-h-[38rem] flex-col overflow-hidden lg:min-h-[42rem]"
+  >
+    <!-- Media layer: poster (LCP) with the YouTube iframe fading in on top once playing. -->
+    <div class="absolute inset-0 -z-10 [container-type:size]" aria-hidden="true">
+      <ResponsiveImage
+        src={poster}
+        alt=""
+        sizes="100vw"
+        priority
+        pictureClass="absolute inset-0"
+        class="size-full object-cover"
+      />
+      <div
+        data-frame
+        class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-1000 data-[playing]:opacity-100"
+      ></div>
+      {!videoOnly && (
+        <div class="absolute inset-0 bg-linear-to-r from-navy/80 via-navy/45 to-navy/10" />
+      )}
+    </div>
+
+    <Container
+      class:list={['flex flex-1 flex-col pt-16 pb-20 sm:pt-20 lg:pt-24', videoOnly && 'sr-only']}
+    >
+      <p class="text-xs font-bold tracking-[0.2em] sm:text-sm">
+        <span class="text-brand-green">{hero.eyebrow.accent}</span>
+        <span aria-hidden="true"> · </span>
+        <span>{hero.eyebrow.rest}</span>
+      </p>
+      <h1 class="mt-4 max-w-2xl text-4xl leading-[1.02] font-bold text-balance sm:text-5xl lg:text-6xl">
+        {hero.title}
+      </h1>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <Button href={site.links.quote}>Solicitar cotización</Button>
+        <Button href={capacityHref} variant="outline-light">
+          Conozca nuestra capacidad
+        </Button>
+      </div>
+
+      <dl class="mt-auto grid grid-cols-2 gap-x-6 gap-y-8 pt-14 lg:grid-cols-4">
+        {hero.stats.map((stat) => (
+          <div class="flex flex-col text-center">
+            <dt class="mx-auto mt-1 max-w-[16rem] text-xs leading-snug text-white/90 sm:text-sm">
+              {stat.label}
+              {stat.highlight && (
+                <>
+                  <br />
+                  <strong class="font-bold text-white">{stat.highlight}</strong>
+                </>
+              )}
+            </dt>
+            <dd class="order-first text-5xl leading-none font-bold sm:text-6xl">
+              {stat.prefix && <span class="text-brand-green">{stat.prefix}</span>}
+              {stat.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+
+    {youtubeId && (
+      <>
+        <button
+          type="button"
+          data-play
+          hidden
+          class="absolute top-1/2 left-1/2 z-10 flex size-20 -translate-1/2 items-center justify-center rounded-full bg-white/90 text-brand-blue shadow-xl transition-transform hover:scale-105 lg:left-3/4"
+          aria-label="Reproducir video"
+        >
+          <svg viewBox="0 0 24 24" class="ml-1 size-9" fill="currentColor" aria-hidden="true">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        </button>
+
+        <div data-controls hidden class="absolute right-4 bottom-4 z-10 flex gap-2 sm:right-8">
+          <button
+            type="button"
+            data-toggle-play
+            class="flex size-10 items-center justify-center rounded-full bg-navy/60 text-white backdrop-blur-sm hover:bg-navy/80"
+            aria-label="Pausar video"
+          >
+            <svg
+              data-icon-pause
+              viewBox="0 0 24 24"
+              class="size-5"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M7 5h4v14H7zM13 5h4v14h-4z" />
+            </svg>
+            <svg
+              data-icon-play
+              viewBox="0 0 24 24"
+              class="hidden ml-0.5 size-5"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            data-toggle-mute
+            class="flex size-10 items-center justify-center rounded-full bg-navy/60 text-white backdrop-blur-sm hover:bg-navy/80"
+            aria-label="Activar sonido"
+            aria-pressed="false"
+          >
+            <svg
+              data-icon-muted
+              viewBox="0 0 24 24"
+              class="size-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path d="M11 5L6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6" stroke-linejoin="round" />
+            </svg>
+            <svg
+              data-icon-sound
+              viewBox="0 0 24 24"
+              class="hidden size-5"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              aria-hidden="true"
+            >
+              <path
+                d="M11 5L6 9H3v6h3l5 4zM15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </>
+    )}
+  </shalom-hero>
+</section>
+
+<script>
+  const YT_ORIGIN = 'https://www.youtube-nocookie.com';
+  const PLAYING = 1;
+  /** Time to wait for playback before assuming autoplay was blocked. */
+  const AUTOPLAY_TIMEOUT = 6000;
+
+  const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = () =>
+    (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData ===
+    true;
+
+  class ShalomHero extends HTMLElement {
+    private iframe: HTMLIFrameElement | null = null;
+    private frameHost!: HTMLElement;
+    private playBtn!: HTMLButtonElement;
+    private controls!: HTMLElement;
+    private togglePlayBtn!: HTMLButtonElement;
+    private toggleMuteBtn!: HTMLButtonElement;
+    private playing = false;
+    private muted = true;
+    private userPaused = false;
+    private fallbackTimer: number | undefined;
+
+    connectedCallback() {
+      const id = this.dataset.youtubeId;
+      if (!id) return;
+
+      this.frameHost = this.querySelector<HTMLElement>('[data-frame]')!;
+      this.playBtn = this.querySelector<HTMLButtonElement>('[data-play]')!;
+      this.controls = this.querySelector<HTMLElement>('[data-controls]')!;
+      this.togglePlayBtn = this.querySelector<HTMLButtonElement>('[data-toggle-play]')!;
+      this.toggleMuteBtn = this.querySelector<HTMLButtonElement>('[data-toggle-mute]')!;
+
+      this.playBtn.addEventListener('click', () => this.start(id));
+      this.togglePlayBtn.addEventListener('click', () => this.togglePlay());
+      this.toggleMuteBtn.addEventListener('click', () => this.toggleMute());
+      window.addEventListener('message', this.onMessage);
+
+      const autoStart = !prefersReducedMotion() && !saveData();
+      if (!autoStart) this.playBtn.hidden = false;
+
+      // Load the player only after the page (and its LCP poster) has loaded, and
+      // pause it while the hero is off screen to save CPU and battery.
+      const whenLoaded =
+        document.readyState === 'complete'
+          ? Promise.resolve()
+          : new Promise<void>((resolve) =>
+              window.addEventListener('load', () => resolve(), { once: true }),
+            );
+      whenLoaded.then(() => {
+        new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            if (!this.iframe && autoStart) this.start(id);
+            else if (this.iframe && !this.userPaused) this.command('playVideo');
+          } else if (this.playing) {
+            this.command('pauseVideo');
+          }
+        }).observe(this);
+      });
+    }
+
+    private start(id: string) {
+      this.playBtn.hidden = true;
+      this.userPaused = false;
+      if (this.iframe) {
+        this.command('playVideo');
+        return;
+      }
+
+      const params = new URLSearchParams({
+        autoplay: '1',
+        mute: '1',
+        loop: '1',
+        playlist: id,
+        controls: '0',
+        rel: '0',
+        playsinline: '1',
+        disablekb: '1',
+        iv_load_policy: '3',
+        enablejsapi: '1',
+        origin: window.location.origin,
+      });
+
+      const iframe = document.createElement('iframe');
+      iframe.src = `${YT_ORIGIN}/embed/${id}?${params}`;
+      iframe.title = 'Video institucional de Grupo Shalom';
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+      iframe.tabIndex = -1;
+      // Cover the container like `object-fit: cover` for a 16:9 video.
+      iframe.className =
+        'absolute top-1/2 left-1/2 h-[max(100cqh,56.25cqw)] w-[max(100cqw,177.78cqh)] -translate-1/2 border-0';
+      iframe.addEventListener('load', () => {
+        // Subscribe to player events (YouTube postMessage protocol).
+        iframe.contentWindow?.postMessage(
+          JSON.stringify({ event: 'listening', id: 'shalom-hero', channel: 'widget' }),
+          YT_ORIGIN,
+        );
+      });
+      this.frameHost.append(iframe);
+      this.iframe = iframe;
+
+      window.clearTimeout(this.fallbackTimer);
+      this.fallbackTimer = window.setTimeout(() => {
+        if (!this.playing) this.playBtn.hidden = false;
+      }, AUTOPLAY_TIMEOUT);
+    }
+
+    private onMessage = (event: MessageEvent) => {
+      if (event.origin !== YT_ORIGIN || event.source !== this.iframe?.contentWindow) return;
+      let data: { event?: string; info?: { playerState?: number; muted?: boolean } | number };
+      try {
+        data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+      } catch {
+        return;
+      }
+      const state =
+        typeof data.info === 'number'
+          ? data.event === 'onStateChange'
+            ? data.info
+            : undefined
+          : data.info?.playerState;
+      if (state === undefined) return;
+      this.setPlaying(state === PLAYING);
+    };
+
+    private setPlaying(playing: boolean) {
+      this.playing = playing;
+      if (playing) {
+        window.clearTimeout(this.fallbackTimer);
+        this.frameHost.dataset.playing = '';
+        this.playBtn.hidden = true;
+        this.controls.hidden = false;
+      }
+      this.togglePlayBtn.setAttribute('aria-label', playing ? 'Pausar video' : 'Reproducir video');
+      this.togglePlayBtn
+        .querySelector<SVGElement>('[data-icon-pause]')!
+        .classList.toggle('hidden', !playing);
+      this.togglePlayBtn
+        .querySelector<SVGElement>('[data-icon-play]')!
+        .classList.toggle('hidden', playing);
+    }
+
+    private togglePlay() {
+      this.userPaused = this.playing;
+      this.command(this.playing ? 'pauseVideo' : 'playVideo');
+    }
+
+    private toggleMute() {
+      this.muted = !this.muted;
+      if (this.muted) {
+        this.command('mute');
+      } else {
+        this.command('unMute');
+        this.command('setVolume', [100]);
+      }
+      this.toggleMuteBtn.setAttribute('aria-pressed', String(!this.muted));
+      this.toggleMuteBtn.setAttribute(
+        'aria-label',
+        this.muted ? 'Activar sonido' : 'Silenciar sonido',
+      );
+      this.toggleMuteBtn
+        .querySelector('[data-icon-muted]')!
+        .classList.toggle('hidden', !this.muted);
+      this.toggleMuteBtn.querySelector('[data-icon-sound]')!.classList.toggle('hidden', this.muted);
+    }
+
+    private command(func: string, args: unknown[] = []) {
+      this.iframe?.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func, args }),
+        YT_ORIGIN,
+      );
+    }
+  }
+
+  customElements.define('shalom-hero', ShalomHero);
+</script>

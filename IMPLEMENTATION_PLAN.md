@@ -80,7 +80,7 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 - [x] Smooth scroll for anchors with `scroll-padding-top` for the fixed header
 - [x] `prefers-reduced-motion` support for smooth scroll
 - [x] `prefers-reduced-motion` support for carousel autoplay (Phase 2)
-- [ ] `prefers-reduced-motion` support for video autoplay (Phase 4)
+- [x] `prefers-reduced-motion` support for video autoplay (Phase 4)
 
 ## Phase 2 — Shared UI components (2 h)
 
@@ -108,14 +108,18 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 
 ## Phase 4 — Hero and client logos (2 h)
 
-- [ ] Hero with eyebrow, H1, two CTAs and four stats ⏳ P-L1, P-C2
-- [ ] YouTube background facade: poster image as LCP, iframe injected on visibility ⏳ P-L5
-- [ ] Embed params: `youtube-nocookie`, muted, loop, `playsinline`, no related videos
-- [ ] Fallback: poster + play button when autoplay is blocked
-- [ ] Dark overlay for text legibility over video
-- [ ] Hero layout variant switch (text over video vs. video only) via config ⏳ P-L5
-- [ ] "Conozca nuestra capacidad" CTA ⏳ P-L5 (default: Promise anchor)
-- [ ] Client logos strip ⏳ P-L6, P-C4 (plain images, no links, until confirmed)
+- [x] Hero with eyebrow, H1, two CTAs and four stats ⏳ P-L1, P-C2
+- [x] YouTube background facade: poster image as LCP, iframe injected on visibility ⏳ P-L5
+- [x] Embed params: `youtube-nocookie`, muted, loop, `playsinline`, no related videos
+- [x] Fallback: poster + play button when autoplay is blocked (6 s timeout), with reduced motion or with Save-Data
+- [x] Dark overlay for text legibility over video
+- [x] Hero layout variant switch (text over video vs. video only) via config ⏳ P-L5
+- [x] "Conozca nuestra capacidad" CTA ⏳ P-L5 (default: Promise anchor)
+- [x] Client logos strip ⏳ P-L6, P-C4 (plain images, no links, until confirmed)
+- [x] Custom pause and sound controls (WCAG 2.2.2); video pauses while the hero is off screen
+- [x] Hero and client data in `src/content/hero.ts` and `src/content/clients.ts`
+- [x] Verified in Chromium: autoplay, LCP = poster (AVIF), pause/sound toggles, iframe covers hero, reduced motion, no overflow at 390/768/1024/1440
+- [x] Fix from Phase 3: header CTA no longer hides the hamburger below 640 px
 
 ## Phase 5 — Storytelling sections (2 h)
 
@@ -181,29 +185,29 @@ Mirrors the client pendings in the scope document. Update the status column as i
 
 ### Links and CTA (P-L)
 
-| ID    | Section            | Element                                                  | Config key                            | Placeholder behavior          | Status  |
-| ----- | ------------------ | -------------------------------------------------------- | ------------------------------------- | ----------------------------- | ------- |
-| P-L1  | Whole site         | "Solicitar cotización" (header, hero, final CTA, footer) | `links.quote`                         | `#contacto`                   | Pending |
-| P-L2  | Header             | "HoReCa"                                                 | `nav.horeca`                          | Solutions anchor, HoReCa tab  | Pending |
-| P-L3  | Header             | "Shalom"                                                 | `nav.shalom`                          | `#quienes-somos`              | Pending |
-| P-L4  | Header             | "Contacto"                                               | `nav.contact`                         | `#contacto`                   | Pending |
-| P-L5  | Hero               | Video + "Conozca nuestra capacidad" + layout             | `hero.youtubeId`, `hero.variant`      | Poster image, text over media | Pending |
-| P-L6  | Clients            | Logo links                                               | `clients[].href`                      | No link                       | Pending |
-| P-L7  | Improvise carousel | Images only vs. image + text per slide                   | `improvise.mode`                      | Images only                   | Pending |
-| P-L8  | Solutions          | "Conocer soluciones +" per tab                           | `solutions[].href`                    | `links.quote`                 | Pending |
-| P-L9  | Press              | "Leer más" per note                                      | `press[].href`                        | `#` (disabled style)          | Pending |
-| P-L10 | Catalog            | "Ver catálogo completo" (x2)                             | `links.catalog`                       | `#` (disabled style)          | Pending |
-| P-L11 | Catalog            | Portfolio PDF                                            | `links.portfolioPdf`                  | `#` (disabled style)          | Pending |
-| P-L12 | Catalog            | "Solicite una cotización por categoría"                  | `links.quoteByCategory`               | Plain text                    | Pending |
-| P-L13 | Catalog            | 14 category cards                                        | `catalog[].href`                      | Not clickable                 | Pending |
-| P-L14 | Final CTA          | "Hablar con un asesor"                                   | `links.advisor`                       | WhatsApp link                 | Pending |
-| P-L15 | Final CTA          | Form card                                                | `contact.formMode`, `contact.formUrl` | Placeholder card              | Pending |
-| P-L16 | Footer             | "Valores"                                                | `footer.values`                       | Hidden                        | Pending |
-| P-L17 | Footer             | Email                                                    | `contact.email`                       | `contacto@gruposhalom.com.co` | Pending |
-| P-L18 | Footer             | "Bogotá, Colombia"                                       | `contact.mapsUrl`                     | Plain text                    | Pending |
-| P-L19 | Footer             | Social networks                                          | `social[]`                            | Hidden                        | Pending |
-| P-L20 | Footer             | Data policy (Ley 1581 de 2012)                           | `links.privacyPolicy`                 | `#` (disabled style)          | Pending |
-| P-L21 | Floating button    | WhatsApp number + message                                | `contact.whatsapp`                    | Button links to `#contacto`   | Pending |
+| ID    | Section            | Element                                                  | Config key                            | Placeholder behavior          | Status                                                  |
+| ----- | ------------------ | -------------------------------------------------------- | ------------------------------------- | ----------------------------- | ------------------------------------------------------- |
+| P-L1  | Whole site         | "Solicitar cotización" (header, hero, final CTA, footer) | `links.quote`                         | `#contacto`                   | Pending                                                 |
+| P-L2  | Header             | "HoReCa"                                                 | `nav.horeca`                          | Solutions anchor, HoReCa tab  | Pending                                                 |
+| P-L3  | Header             | "Shalom"                                                 | `nav.shalom`                          | `#quienes-somos`              | Pending                                                 |
+| P-L4  | Header             | "Contacto"                                               | `nav.contact`                         | `#contacto`                   | Pending                                                 |
+| P-L5  | Hero               | Video + "Conozca nuestra capacidad" + layout             | `hero.youtubeId`, `hero.variant`      | Poster image, text over media | Test video set; final video and layout decision pending |
+| P-L6  | Clients            | Logo links                                               | `clients[].href`                      | No link                       | Pending                                                 |
+| P-L7  | Improvise carousel | Images only vs. image + text per slide                   | `improvise.mode`                      | Images only                   | Pending                                                 |
+| P-L8  | Solutions          | "Conocer soluciones +" per tab                           | `solutions[].href`                    | `links.quote`                 | Pending                                                 |
+| P-L9  | Press              | "Leer más" per note                                      | `press[].href`                        | `#` (disabled style)          | Pending                                                 |
+| P-L10 | Catalog            | "Ver catálogo completo" (x2)                             | `links.catalog`                       | `#` (disabled style)          | Pending                                                 |
+| P-L11 | Catalog            | Portfolio PDF                                            | `links.portfolioPdf`                  | `#` (disabled style)          | Pending                                                 |
+| P-L12 | Catalog            | "Solicite una cotización por categoría"                  | `links.quoteByCategory`               | Plain text                    | Pending                                                 |
+| P-L13 | Catalog            | 14 category cards                                        | `catalog[].href`                      | Not clickable                 | Pending                                                 |
+| P-L14 | Final CTA          | "Hablar con un asesor"                                   | `links.advisor`                       | WhatsApp link                 | Pending                                                 |
+| P-L15 | Final CTA          | Form card                                                | `contact.formMode`, `contact.formUrl` | Placeholder card              | Pending                                                 |
+| P-L16 | Footer             | "Valores"                                                | `footer.values`                       | Hidden                        | Pending                                                 |
+| P-L17 | Footer             | Email                                                    | `contact.email`                       | `contacto@gruposhalom.com.co` | Pending                                                 |
+| P-L18 | Footer             | "Bogotá, Colombia"                                       | `contact.mapsUrl`                     | Plain text                    | Pending                                                 |
+| P-L19 | Footer             | Social networks                                          | `social[]`                            | Hidden                        | Pending                                                 |
+| P-L20 | Footer             | Data policy (Ley 1581 de 2012)                           | `links.privacyPolicy`                 | `#` (disabled style)          | Pending                                                 |
+| P-L21 | Floating button    | WhatsApp number + message                                | `contact.whatsapp`                    | Button links to `#contacto`   | Pending                                                 |
 
 ### Content and access (P-C)
 
@@ -234,10 +238,11 @@ Mirrors the client pendings in the scope document. Update the status column as i
 
 ## Log
 
-| Date       | Note                                                                                                                                                                                                                                                              |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-09-24 | Plan created. Assets analyzed; client logos and hero background to be extracted from the `.ai`.                                                                                                                                                                   |
-| 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped.                                           |
-| 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                                                          |
-| 2026-09-24 | Phase 2 done. UI kit: Container, Button (null `href` renders a disabled placeholder), Eyebrow, SectionHeading, ResponsiveImage (AVIF/WebP, WebP fallback because sources have alpha), Carousel and Tabs as custom elements. `sharp` added as a direct dependency. |
-| 2026-09-24 | Phase 3 done. Fixed header with scroll-spy, mobile menu on native `<dialog>`, floating WhatsApp button, navigation data in `src/content/navigation.ts`. Desktop nav starts at 1280 px because 6 links + CTA do not fit at 1024 px.                                |
+| Date       | Note                                                                                                                                                                                                                                                                  |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-09-24 | Plan created. Assets analyzed; client logos and hero background to be extracted from the `.ai`.                                                                                                                                                                       |
+| 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped.                                               |
+| 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                                                              |
+| 2026-09-24 | Phase 2 done. UI kit: Container, Button (null `href` renders a disabled placeholder), Eyebrow, SectionHeading, ResponsiveImage (AVIF/WebP, WebP fallback because sources have alpha), Carousel and Tabs as custom elements. `sharp` added as a direct dependency.     |
+| 2026-09-24 | Phase 3 done. Fixed header with scroll-spy, mobile menu on native `<dialog>`, floating WhatsApp button, navigation data in `src/content/navigation.ts`. Desktop nav starts at 1280 px because 6 links + CTA do not fit at 1024 px.                                    |
+| 2026-09-25 | Phase 4 done. Hero with YouTube background (test video `IXWEQHCKR20` in `site.ts`), custom controls, fallbacks, and client logos strip. Fixed a Phase 3 bug: `hidden` passed to `Button` lost against its base `inline-flex`; display utilities must go on a wrapper. |

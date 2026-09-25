@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import Container from '../ui/Container.astro';
+import { site } from '../../config/site';
+import { clients } from '../../content/clients';
+---
+
+{site.clients.visible && (
+  <section id="clientes" aria-label="Clientes y aliados" class="border-b border-ink/10 bg-white">
+    <Container>
+      <ul class="mx-auto grid max-w-4xl grid-cols-2 items-center gap-x-8 gap-y-6 py-8 md:grid-cols-4 lg:gap-x-12">
+        {clients.map((client) => {
+          const logo = (
+            <Image
+              src={client.logo}
+              alt={client.name}
+              height={56}
+              densities={[1, 2]}
+              class="mx-auto h-10 w-auto max-w-full object-contain mix-blend-multiply sm:h-12 lg:h-14"
+            />
+          );
+          return (
+            <li>
+              {client.href ? (
+                <a href={client.href} target="_blank" rel="noopener noreferrer">
+                  {logo}
+                </a>
+              ) : (
+                logo
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </Container>
+  </section>
+)}

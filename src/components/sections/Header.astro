@@ -37,9 +37,11 @@ import logo from '../../assets/logos/shalom-color.webp';
     </nav>
 
     <div class="flex items-center gap-3">
-      <Button href={site.links.quote} size="sm" class="hidden sm:inline-flex">
-        Solicitar cotización
-      </Button>
+      <div class="hidden sm:block">
+        <Button href={site.links.quote} size="sm">
+          Solicitar cotización
+        </Button>
+      </div>
       <button
         type="button"
         data-menu-open

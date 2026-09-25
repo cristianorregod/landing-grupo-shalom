@@ -94,8 +94,8 @@ export const site: SiteConfig = {
   },
 
   hero: {
-    // PENDING P-L5: YouTube video ID and layout decision.
-    youtubeId: null,
+    // PENDING P-L5: temporary test video until the client delivers the final one.
+    youtubeId: 'IXWEQHCKR20',
     variant: 'text-over-video',
     capacityHref: anchors.guarantee,
   },

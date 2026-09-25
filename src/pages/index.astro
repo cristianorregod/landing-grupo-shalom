@@ -2,12 +2,12 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/sections/Header.astro';
 import WhatsAppFab from '../components/sections/WhatsAppFab.astro';
+import Hero from '../components/sections/Hero.astro';
+import Clients from '../components/sections/Clients.astro';
 import Container from '../components/ui/Container.astro';
 
 // Temporary stubs keep every anchor in place until each section is built.
 const stubs = [
-  { id: 'hero', label: 'Hero (Phase 4)', tone: 'bg-navy text-white' },
-  { id: 'clientes', label: 'Client logos (Phase 4)', tone: 'bg-white' },
   { id: 'garantizamos', label: 'Mientras unos improvisan (Phase 5)', tone: 'bg-white' },
   { id: 'trayectoria', label: 'Trajectory (Phase 5)', tone: 'bg-white' },
   { id: 'garantia', label: 'Promise: Garantía & Capacidad (Phase 5)', tone: 'bg-beige' },
@@ -22,6 +22,8 @@ const stubs = [
 <Base>
   <Header />
   <main id="top" class="pt-16 lg:pt-20">
+    <Hero />
+    <Clients />
     {stubs.map((stub) => (
       <section id={stub.id} class:list={['flex min-h-[70vh] items-center', stub.tone]}>
         <Container>
