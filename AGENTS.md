@@ -1,3 +1,10 @@
+## Project context
+
+- Progress, phases, pending client items and decisions live in `IMPLEMENTATION_PLAN.md`. Read it before starting any phase and update its checkboxes and Log when a phase is done.
+- Every link, CTA target and external ID lives in `src/config/site.ts` (`null` = pending client item). Replaceable copy lives in `src/content/*.ts`.
+- Per-phase workflow: implement → `pnpm format` → `pnpm build` (runs `astro check`) → browser check → update plan → commit.
+- Conventional commits, no AI attribution.
+
 ## Development
 
 When starting the dev server, use background mode:
