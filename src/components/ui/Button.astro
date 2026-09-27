@@ -8,6 +8,9 @@ interface Props {
   variant?: 'primary' | 'outline-light' | 'light' | 'blue';
   size?: 'sm' | 'md';
   external?: boolean;
+  /** Uppercase label. Defaults to true except for the `light` variant. */
+  caps?: boolean;
+  /** Spacing/sizing only; display and shape come from the variant. */
   class?: string;
   'data-track'?: string;
 }
@@ -17,15 +20,16 @@ const {
   variant = 'primary',
   size = 'md',
   external = href?.startsWith('http') ?? false,
+  caps = variant !== 'light',
   class: className,
   ...attrs
 } = Astro.props;
 
 const variants = {
-  primary: 'bg-brand-green text-white hover:bg-brand-green/90 uppercase',
-  'outline-light': 'border-2 border-white text-white hover:bg-white/10 uppercase',
+  primary: 'bg-brand-green text-white hover:bg-brand-green/90',
+  'outline-light': 'border-2 border-white text-white hover:bg-white/10',
   light: 'bg-white text-brand-blue hover:bg-white/90',
-  blue: 'bg-brand-blue text-white hover:bg-brand-blue/90 uppercase',
+  blue: 'bg-brand-blue text-white hover:bg-brand-blue/90',
 } as const;
 
 const sizes = {
@@ -38,6 +42,7 @@ const classes = [
   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current',
   variants[variant],
   sizes[size],
+  caps && 'uppercase',
   className,
 ];
 ---

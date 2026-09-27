@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets';
+import Container from '../ui/Container.astro';
+import { site } from '../../config/site';
+import { footer } from '../../content/company';
+import logo from '../../assets/logos/shalom-white.webp';
+
+const year = new Date().getFullYear();
+const linkClass = 'transition-colors hover:text-brand-green';
+
+// PENDING P-L16: "Valores" is hidden until it has a destination.
+const companyLinks = [
+  { label: 'Garantía & Capacidad', href: site.anchors.guarantee },
+  { label: 'Trayectoria', href: site.anchors.trajectory },
+  { label: 'Valores', href: site.links.values },
+].filter((link): link is { label: string; href: string } => link.href !== null);
+
+const { email, mapsUrl } = site.contact;
+const { privacyPolicy, quote } = site.links;
+---
+
+<footer class="bg-navy text-white">
+  <Container class="grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr] lg:py-16">
+    <div class="max-w-sm">
+      <Image
+        src={logo}
+        alt={site.name}
+        height={104}
+        densities={[1, 2]}
+        class="h-20 w-auto sm:h-26"
+      />
+      <p class="mt-6 text-sm text-white/90 sm:text-base">{footer.tagline}</p>
+      {site.social.length > 0 && (
+        <ul class="mt-6 flex flex-wrap gap-4 text-sm">
+          {site.social.map((network) => (
+            <li>
+              <a href={network.href} target="_blank" rel="noopener noreferrer" class={linkClass}>
+                {network.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <nav aria-labelledby="footer-company" class="lg:pt-16">
+      <h2 id="footer-company" class="text-sm font-bold tracking-wide uppercase">
+        Compañía
+      </h2>
+      <ul class="mt-5 space-y-3 text-sm text-white/90 sm:text-base">
+        {companyLinks.map((link) => (
+          <li>
+            <a href={link.href} class={linkClass}>
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="lg:pt-16">
+      <h2 class="text-sm font-bold tracking-wide uppercase">Contacto</h2>
+      <ul class="mt-5 space-y-3 text-sm text-white/90 sm:text-base">
+        <li>
+          <a href={`mailto:${email}`} class:list={[linkClass, 'break-all']}>
+            {email}
+          </a>
+        </li>
+        <li>
+          {mapsUrl ? (
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class={linkClass}>
+              {footer.location}
+            </a>
+          ) : (
+            footer.location
+          )}
+        </li>
+        <li>
+          <a href={quote} class={linkClass}>
+            Solicitar cotización
+          </a>
+        </li>
+      </ul>
+    </div>
+  </Container>
+
+  <div class="border-t border-white/20">
+    <Container class="flex flex-col gap-3 py-6 pb-24 text-xs text-white/80 sm:text-sm md:flex-row md:items-center md:justify-between md:pb-6">
+      <p>
+        © {year} {site.name}. Todos los derechos reservados.
+      </p>
+      {privacyPolicy ? (
+        <a href={privacyPolicy} target="_blank" rel="noopener noreferrer" class={linkClass}>
+          Política de tratamiento de datos
+        </a>
+      ) : (
+        // PENDING P-L20: required by Ley 1581 de 2012; visible so the gap is noticed.
+        <span class="cursor-not-allowed opacity-60" aria-disabled="true">
+          Política de tratamiento de datos
+        </span>
+      )}
+      <p>{footer.slogan}</p>
+    </Container>
+  </div>
+</footer>

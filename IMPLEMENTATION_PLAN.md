@@ -144,22 +144,24 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 
 ## Phase 7 — Catalog, About, Final CTA, Footer (1.5 h)
 
-- [ ] Catalog header, copy and CTA block
-- [ ] Grid of 14 categories from `content/catalog.ts` (3 / 2 / 1 columns)
-- [ ] Category cards clickable or static via config ⏳ P-L13
-- [ ] "Ver catálogo completo" buttons ⏳ P-L10
-- [ ] "Descargue el portafolio en PDF" link ⏳ P-L11
-- [ ] "Solicite una cotización por categoría" link ⏳ P-L12
-- [ ] Mobile: avoid the duplicated catalog CTA (keep one at the end of the grid)
-- [ ] About section with photo and copy
-- [ ] Final CTA block with gradient, isotype and two buttons ⏳ P-L1, P-L14
-- [ ] Form card: placeholder card, switchable to embedded iframe or button ⏳ P-L15
-- [ ] Footer: logo, tagline, company links, contact, copyright
-- [ ] Footer "Valores" link ⏳ P-L16 (hidden until a target is defined)
-- [ ] Footer email `mailto:` ⏳ P-L17
-- [ ] Footer "Bogotá, Colombia" (plain text, Google Maps link if confirmed) ⏳ P-L18
-- [ ] Footer social icons slot, hidden when empty ⏳ P-L19
-- [ ] Footer data policy link (Ley 1581 de 2012) ⏳ P-L20
+- [x] Catalog header, copy and CTA block
+- [x] Grid of 14 categories from `content/catalog.ts` (3 / 2 / 1 columns)
+- [x] Category cards clickable or static via config ⏳ P-L13
+- [x] "Ver catálogo completo" buttons ⏳ P-L10
+- [x] "Descargue el portafolio en PDF" link ⏳ P-L11
+- [x] "Solicite una cotización por categoría" link ⏳ P-L12
+- [x] Below 1024 px the catalog CTA appears once, after the grid (desktop keeps both, as in the design)
+- [x] About section with photo and copy
+- [x] Final CTA block with gradient, isotype and two buttons (advisor falls back to WhatsApp) ⏳ P-L1, P-L14
+- [x] Form card: placeholder card, switchable to embedded iframe or button ⏳ P-L15
+- [x] Footer: logo, tagline, company links, contact, copyright
+- [x] Footer "Valores" link ⏳ P-L16 (hidden until a target is defined)
+- [x] Footer email `mailto:` ⏳ P-L17
+- [x] Footer "Bogotá, Colombia" (plain text, Google Maps link if confirmed) ⏳ P-L18
+- [x] Footer social icons slot, hidden when empty ⏳ P-L19
+- [x] Footer data policy link (Ley 1581 de 2012), shown disabled while missing ⏳ P-L20
+- [x] Copy in `src/content/catalog.ts` and `src/content/company.ts`; all section stubs removed
+- [x] Verified in Chromium: no overflow at 390/768/1024/1440, 14 icons load, no 4xx, no glued words in rendered text
 
 ## Phase 8 — QA (1 h)
 
@@ -243,13 +245,14 @@ Mirrors the client pendings in the scope document. Update the status column as i
 
 ## Log
 
-| Date       | Note                                                                                                                                                                                                                                                                  |
-| ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-09-24 | Plan created. Assets analyzed; client logos and hero background to be extracted from the `.ai`.                                                                                                                                                                       |
-| 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped.                                               |
-| 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                                                              |
-| 2026-09-24 | Phase 2 done. UI kit: Container, Button (null `href` renders a disabled placeholder), Eyebrow, SectionHeading, ResponsiveImage (AVIF/WebP, WebP fallback because sources have alpha), Carousel and Tabs as custom elements. `sharp` added as a direct dependency.     |
-| 2026-09-24 | Phase 3 done. Fixed header with scroll-spy, mobile menu on native `<dialog>`, floating WhatsApp button, navigation data in `src/content/navigation.ts`. Desktop nav starts at 1280 px because 6 links + CTA do not fit at 1024 px.                                    |
-| 2026-09-25 | Phase 4 done. Hero with YouTube background (test video `IXWEQHCKR20` in `site.ts`), custom controls, fallbacks, and client logos strip. Fixed a Phase 3 bug: `hidden` passed to `Button` lost against its base `inline-flex`; display utilities must go on a wrapper. |
-| 2026-09-25 | Phase 5 done. Improvise (3-slide carousel), Trajectory (timeline + 4-photo team carousel) and Promise sections. Promise component named `OurPromise` to avoid shadowing the global `Promise`.                                                                         |
-| 2026-09-25 | Phase 6 done. Solutions (4 tabs, 3 with draft copy pending client validation) and Press carousel (3/2/1 cards per view). Fixed Carousel CLS and dot count, and a Tabs bug where `scrollIntoView` cancelled the nav anchor scroll.                                     |
+| Date       | Note                                                                                                                                                                                                                                                                          |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-09-24 | Plan created. Assets analyzed; client logos and hero background to be extracted from the `.ai`.                                                                                                                                                                               |
+| 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped.                                                       |
+| 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                                                                      |
+| 2026-09-24 | Phase 2 done. UI kit: Container, Button (null `href` renders a disabled placeholder), Eyebrow, SectionHeading, ResponsiveImage (AVIF/WebP, WebP fallback because sources have alpha), Carousel and Tabs as custom elements. `sharp` added as a direct dependency.             |
+| 2026-09-24 | Phase 3 done. Fixed header with scroll-spy, mobile menu on native `<dialog>`, floating WhatsApp button, navigation data in `src/content/navigation.ts`. Desktop nav starts at 1280 px because 6 links + CTA do not fit at 1024 px.                                            |
+| 2026-09-25 | Phase 4 done. Hero with YouTube background (test video `IXWEQHCKR20` in `site.ts`), custom controls, fallbacks, and client logos strip. Fixed a Phase 3 bug: `hidden` passed to `Button` lost against its base `inline-flex`; display utilities must go on a wrapper.         |
+| 2026-09-25 | Phase 5 done. Improvise (3-slide carousel), Trajectory (timeline + 4-photo team carousel) and Promise sections. Promise component named `OurPromise` to avoid shadowing the global `Promise`.                                                                                 |
+| 2026-09-25 | Phase 6 done. Solutions (4 tabs, 3 with draft copy pending client validation) and Press carousel (3/2/1 cards per view). Fixed Carousel CLS and dot count, and a Tabs bug where `scrollIntoView` cancelled the nav anchor scroll.                                             |
+| 2026-09-27 | Phase 7 done. Catalog (14 categories, CTA block), About, Final CTA (form card with placeholder/embed/button modes) and Footer. All 13 sections are built. Gotcha: Astro trims whitespace between template expressions, so sentence joins must keep the space inside a string. |

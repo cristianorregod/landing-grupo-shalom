@@ -1,0 +1,34 @@
+---
+import Button from '../ui/Button.astro';
+import { site } from '../../config/site';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const { catalog, portfolioPdf, quoteByCategory } = site.links;
+const linkClass = 'underline decoration-brand-green underline-offset-4 hover:text-brand-blue';
+---
+
+<div class:list={['flex flex-col items-start gap-4', className]}>
+  <Button href={catalog}>Ver catálogo completo</Button>
+  <p class="text-base text-ink/90 sm:text-lg">
+    {portfolioPdf ? (
+      <a href={portfolioPdf} target="_blank" rel="noopener noreferrer" class={linkClass}>
+        Descargue el portafolio en PDF
+      </a>
+    ) : (
+      'Descargue el portafolio en PDF'
+    )}
+    <br />o{' '}
+    {quoteByCategory ? (
+      // The period lives inside the link: Astro keeps template line breaks as spaces.
+      <a href={quoteByCategory} class={linkClass}>
+        solicite una cotización por categoría.
+      </a>
+    ) : (
+      'solicite una cotización por categoría.'
+    )}
+  </p>
+</div>

@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import Container from '../ui/Container.astro';
+import Button from '../ui/Button.astro';
+import { site, whatsappHref } from '../../config/site';
+import { finalCta } from '../../content/company';
+import isotype from '../../assets/logos/shalom-isotype.webp';
+
+const { formMode, formUrl } = site.contact;
+// PENDING P-L14: defaults to WhatsApp when no advisor link is set.
+const advisorHref = site.links.advisor ?? whatsappHref();
+---
+
+<section
+  id="contacto"
+  class="bg-[linear-gradient(100deg,var(--color-cta-from)_0%,#3460b4_55%,var(--color-cta-to)_100%)] py-16 text-white lg:py-24"
+>
+  <Container class="grid items-center gap-10 lg:grid-cols-[3fr_2fr] lg:gap-16">
+    <div>
+      <Image
+        src={isotype}
+        alt=""
+        width={104}
+        densities={[1, 2]}
+        class="size-20 rounded-2xl sm:size-26"
+      />
+      <h2 class="mt-8 text-4xl leading-[1.02] font-bold text-balance sm:text-5xl xl:text-[3.5rem]">
+        {finalCta.title}
+      </h2>
+      <p class="mt-4 max-w-xl text-base text-white/90 sm:text-lg">
+        <!-- Trailing space kept inside the span: Astro trims whitespace between expressions. -->
+        <span class="sm:block">{`${finalCta.body[0]} `}</span>
+        {finalCta.body[1]}
+      </p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <Button href={site.links.quote} variant="light">
+          Solicitar cotización
+        </Button>
+        <Button href={advisorHref} variant="outline-light" caps={false}>
+          Hablar con un asesor
+        </Button>
+      </div>
+    </div>
+
+    <!-- PENDING P-L15: placeholder card, embedded form or button. -->
+    <div class="rounded-3xl bg-white p-6 text-ink shadow-xl shadow-navy/20 sm:p-8">
+      <h3 class="text-center text-xl text-brand-blue">{finalCta.formTitle}</h3>
+      {formMode === 'embed' && formUrl ? (
+        <iframe
+          src={formUrl}
+          title={finalCta.formTitle}
+          loading="lazy"
+          class="mt-4 h-[32rem] w-full rounded-xl border-0"
+        ></iframe>
+      ) : formMode === 'button' && formUrl ? (
+        <div class="mt-6 flex justify-center">
+          <Button href={formUrl} variant="blue">
+            Diligenciar formulario
+          </Button>
+        </div>
+      ) : (
+        <p class="mt-6 pb-10 text-center text-sm text-ink/60">
+          Pronto podrá enviarnos su solicitud desde aquí.
+        </p>
+      )}
+    </div>
+  </Container>
+</section>
