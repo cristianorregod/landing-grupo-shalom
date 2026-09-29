@@ -12,10 +12,13 @@
 
   --color-brand-blue: #326bd8;
   --color-brand-green: #65a63e;
+  /* Green for small text on light backgrounds (4.5:1); buttons keep brand-green. */
+  --color-brand-green-text: #436e29;
   --color-ink: #434149;
   --color-navy: #303262;
   --color-sky: #d4e1f5;
-  --color-eyebrow: #6f87c7;
+  /* Darkened from the design (#6f87c7) to reach 4.5:1 on white, beige and sky. */
+  --color-eyebrow: #50618f;
   --color-beige: #efe9e8;
   --color-cta-from: #4983cb;
   --color-cta-to: #25253b;

@@ -104,7 +104,6 @@ const {
       this.nextBtn = this.querySelector('[data-next]');
 
       this.slides.forEach((slide, i) => {
-        slide.setAttribute('role', 'group');
         slide.setAttribute('aria-roledescription', 'diapositiva');
         slide.setAttribute('aria-label', `${i + 1} de ${this.slides.length}`);
       });

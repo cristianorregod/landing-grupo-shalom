@@ -165,14 +165,16 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 
 ## Phase 8 — QA (1 h)
 
-- [ ] `astro check` and production build without warnings
-- [ ] Responsive review at 360, 390, 768, 1024, 1280, 1440 px
-- [ ] Chrome, Firefox, Edge and Safari on desktop
-- [ ] iOS Safari and Android Chrome (real devices or BrowserStack)
-- [ ] Lighthouse mobile ≥ 90 (Performance, Accessibility, Best Practices, SEO)
-- [ ] Keyboard navigation (menu, carousels, tabs) and visible focus states
-- [ ] Color contrast check on text over video and over the gradient
-- [ ] All links verified; list of remaining placeholders shared with the client
+- [x] `astro check` and production build without warnings
+- [x] Responsive review at 360, 390, 768, 1024, 1280, 1440 px (no horizontal overflow)
+- [x] Chromium (Chrome/Edge engine) and Firefox: layout, menu, tabs, carousels, video autoplay, no JS errors
+- [ ] WebKit (Safari engine): blocked locally by missing system libraries (`libevent-2.1-7t64 libavif16 libmanette-0.2-0`, needs sudo)
+- [ ] iOS Safari and Android Chrome on real devices (manual, after deploy)
+- [x] Lighthouse mobile: Performance 100, Accessibility 100, Best Practices 96, SEO 100 (LCP 1.8 s, TBT 0 ms, CLS 0.002)
+- [x] Keyboard navigation: 34 tab stops in logical order, visible focus on all, skip link added
+- [x] Contrast: eyebrow and small green text darkened to 4.5:1; axe clean except white on green buttons (2.96:1, decision pending)
+- [x] All links verified: 6 anchors resolve; external links return 200 (trb.ai redirects to WhatsApp)
+- [x] Best Practices 96: only YouTube third-party cookie issue (not fixable on our side)
 
 ## Phase 9 — Deploy and handover (0.5 h)
 
@@ -245,15 +247,16 @@ Mirrors the client pendings in the scope document. Update the status column as i
 
 ## Log
 
-| Date       | Note                                                                                                                                                                                                                                                                          |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-09-24 | Plan created. Assets analyzed; client logos and hero background to be extracted from the `.ai`.                                                                                                                                                                               |
-| 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped.                                                       |
-| 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                                                                      |
-| 2026-09-24 | Phase 2 done. UI kit: Container, Button (null `href` renders a disabled placeholder), Eyebrow, SectionHeading, ResponsiveImage (AVIF/WebP, WebP fallback because sources have alpha), Carousel and Tabs as custom elements. `sharp` added as a direct dependency.             |
-| 2026-09-24 | Phase 3 done. Fixed header with scroll-spy, mobile menu on native `<dialog>`, floating WhatsApp button, navigation data in `src/content/navigation.ts`. Desktop nav starts at 1280 px because 6 links + CTA do not fit at 1024 px.                                            |
-| 2026-09-25 | Phase 4 done. Hero with YouTube background (test video `IXWEQHCKR20` in `site.ts`), custom controls, fallbacks, and client logos strip. Fixed a Phase 3 bug: `hidden` passed to `Button` lost against its base `inline-flex`; display utilities must go on a wrapper.         |
-| 2026-09-25 | Phase 5 done. Improvise (3-slide carousel), Trajectory (timeline + 4-photo team carousel) and Promise sections. Promise component named `OurPromise` to avoid shadowing the global `Promise`.                                                                                 |
-| 2026-09-25 | Phase 6 done. Solutions (4 tabs, 3 with draft copy pending client validation) and Press carousel (3/2/1 cards per view). Fixed Carousel CLS and dot count, and a Tabs bug where `scrollIntoView` cancelled the nav anchor scroll.                                             |
-| 2026-09-27 | Phase 7 done. Catalog (14 categories, CTA block), About, Final CTA (form card with placeholder/embed/button modes) and Footer. All 13 sections are built. Gotcha: Astro trims whitespace between template expressions, so sentence joins must keep the space inside a string. |
-| 2026-09-29 | Client links received: WhatsApp button and "Solicitar cotización" → `gruposhalom.trb.ai/wa/13ukPvL7` (redirects to WhatsApp), nav "HoReCa" → `gruposhalom.com.co/horeca/`. "Hablar con un asesor" and "Conocer soluciones" inherit the WhatsApp/quote link.                   |
+| Date       | Note                                                                                                                                                                                                                                                                                            |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-09-24 | Plan created. Assets analyzed; client logos and hero background to be extracted from the `.ai`.                                                                                                                                                                                                 |
+| 2026-09-24 | Phase 0 done. Astro 7 + Tailwind 4 + sitemap + Montserrat. TypeScript pinned to 6 (`astro check` does not support TS 7). Client logos, hero background and CTA gradient extracted from the `.ai`. Catalog icons mapped.                                                                         |
+| 2026-09-24 | Phase 1 done. Base layout with SEO/OG/Twitter meta, favicons and OG image generated from brand assets, `robots.txt` endpoint, conditional GA4. Site URL lives only in `astro.config.mjs` (`Astro.site`).                                                                                        |
+| 2026-09-24 | Phase 2 done. UI kit: Container, Button (null `href` renders a disabled placeholder), Eyebrow, SectionHeading, ResponsiveImage (AVIF/WebP, WebP fallback because sources have alpha), Carousel and Tabs as custom elements. `sharp` added as a direct dependency.                               |
+| 2026-09-24 | Phase 3 done. Fixed header with scroll-spy, mobile menu on native `<dialog>`, floating WhatsApp button, navigation data in `src/content/navigation.ts`. Desktop nav starts at 1280 px because 6 links + CTA do not fit at 1024 px.                                                              |
+| 2026-09-25 | Phase 4 done. Hero with YouTube background (test video `IXWEQHCKR20` in `site.ts`), custom controls, fallbacks, and client logos strip. Fixed a Phase 3 bug: `hidden` passed to `Button` lost against its base `inline-flex`; display utilities must go on a wrapper.                           |
+| 2026-09-25 | Phase 5 done. Improvise (3-slide carousel), Trajectory (timeline + 4-photo team carousel) and Promise sections. Promise component named `OurPromise` to avoid shadowing the global `Promise`.                                                                                                   |
+| 2026-09-25 | Phase 6 done. Solutions (4 tabs, 3 with draft copy pending client validation) and Press carousel (3/2/1 cards per view). Fixed Carousel CLS and dot count, and a Tabs bug where `scrollIntoView` cancelled the nav anchor scroll.                                                               |
+| 2026-09-27 | Phase 7 done. Catalog (14 categories, CTA block), About, Final CTA (form card with placeholder/embed/button modes) and Footer. All 13 sections are built. Gotcha: Astro trims whitespace between template expressions, so sentence joins must keep the space inside a string.                   |
+| 2026-09-29 | Client links received: WhatsApp button and "Solicitar cotización" → `gruposhalom.trb.ai/wa/13ukPvL7` (redirects to WhatsApp), nav "HoReCa" → `gruposhalom.com.co/horeca/`. "Hablar con un asesor" and "Conocer soluciones" inherit the WhatsApp/quote link.                                     |
+| 2026-09-29 | Phase 8 done. Fixes: contrast tokens (`eyebrow` #50618F, `brand-green-text` #436E29), carousel list semantics, Montserrat latin preload (CLS 0.036 → 0.002), skip link, footer quote link opens in a new tab. Open decision: button green #65A63E fails AA with white text; #508331 would pass. |
