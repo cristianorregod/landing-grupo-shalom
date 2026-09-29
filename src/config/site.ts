@@ -37,7 +37,8 @@ export interface SiteConfig {
   improvise: { mode: 'images-only' | 'image-and-text' };
   contact: {
     email: string;
-    whatsapp: { number: string | null; message: string };
+    /** WhatsApp redirect link (the prefilled message is managed by the provider). */
+    whatsapp: string | null;
     mapsUrl: Href;
     formMode: 'placeholder' | 'embed' | 'button';
     formUrl: Href;
@@ -68,8 +69,8 @@ export const site: SiteConfig = {
   anchors,
 
   nav: {
-    // PENDING P-L2: no dedicated section; defaults to Solutions with HoReCa tab.
-    horeca: '#horeca',
+    // P-L2 (client, 2026-09-29): external HoReCa page, outside this landing.
+    horeca: 'https://gruposhalom.com.co/horeca/',
     // PENDING P-L3
     shalom: anchors.about,
     // PENDING P-L4
@@ -77,8 +78,9 @@ export const site: SiteConfig = {
   },
 
   links: {
-    // PENDING P-L1: external quote form URL.
-    quote: anchors.contact,
+    // P-L1 (client, 2026-09-29): defined for the header CTA; applied to every
+    // "Solicitar cotización" button. Pending confirmation for hero, final CTA and footer.
+    quote: 'https://gruposhalom.trb.ai/wa/13ukPvL7',
     // PENDING P-L10
     catalog: null,
     // PENDING P-L11
@@ -106,11 +108,8 @@ export const site: SiteConfig = {
   contact: {
     // PENDING P-L17: confirm address.
     email: 'contacto@gruposhalom.com.co',
-    // PENDING P-L21: number in international format without "+" (e.g. "573001234567").
-    whatsapp: {
-      number: null,
-      message: 'Hola, quisiera recibir información sobre sus soluciones de abastecimiento.',
-    },
+    // P-L21 (client, 2026-09-29).
+    whatsapp: 'https://gruposhalom.trb.ai/wa/13ukPvL7',
     // PENDING P-L18
     mapsUrl: null,
     // PENDING P-L15
@@ -126,7 +125,5 @@ export const site: SiteConfig = {
 };
 
 export function whatsappHref(): string | null {
-  const { number, message } = site.contact.whatsapp;
-  if (!number) return null;
-  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+  return site.contact.whatsapp;
 }

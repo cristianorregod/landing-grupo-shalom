@@ -76,7 +76,11 @@ const { privacyPolicy, quote } = site.links;
           )}
         </li>
         <li>
-          <a href={quote} class={linkClass}>
+          <a
+            href={quote}
+            class={linkClass}
+            {...(quote.startsWith('http') && { target: '_blank', rel: 'noopener noreferrer' })}
+          >
             Solicitar cotización
           </a>
         </li>
