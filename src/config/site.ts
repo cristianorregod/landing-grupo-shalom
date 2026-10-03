@@ -47,6 +47,12 @@ export interface SiteConfig {
   social: { label: string; href: string }[];
 }
 
+/**
+ * Client decision (2026-10-03): every quote, contact and WhatsApp link goes to
+ * this single WhatsApp redirect. The contact form card is still pending (P-L15).
+ */
+const WHATSAPP_URL = 'https://gruposhalom.trb.ai/wa/13ukPvL7';
+
 const anchors = {
   guarantee: '#garantia',
   trajectory: '#trayectoria',
@@ -73,22 +79,21 @@ export const site: SiteConfig = {
     horeca: 'https://gruposhalom.com.co/horeca/',
     // PENDING P-L3
     shalom: anchors.about,
-    // PENDING P-L4
-    contact: anchors.contact,
+    // P-L4 (client, 2026-10-03)
+    contact: WHATSAPP_URL,
   },
 
   links: {
-    // P-L1 (client, 2026-09-29): defined for the header CTA; applied to every
-    // "Solicitar cotización" button. Pending confirmation for hero, final CTA and footer.
-    quote: 'https://gruposhalom.trb.ai/wa/13ukPvL7',
+    // P-L1 (client, 2026-10-03): all "Solicitar cotización" buttons.
+    quote: WHATSAPP_URL,
     // PENDING P-L10
     catalog: null,
     // PENDING P-L11
     portfolioPdf: null,
-    // PENDING P-L12
-    quoteByCategory: null,
-    // PENDING P-L14: defaults to WhatsApp when null.
-    advisor: null,
+    // P-L12 (client, 2026-10-03)
+    quoteByCategory: WHATSAPP_URL,
+    // P-L14 (client, 2026-10-03)
+    advisor: WHATSAPP_URL,
     // PENDING P-L20: data policy (Ley 1581 de 2012).
     privacyPolicy: null,
     // PENDING P-L16: hidden while null.
@@ -108,8 +113,8 @@ export const site: SiteConfig = {
   contact: {
     // PENDING P-L17: confirm address.
     email: 'contacto@gruposhalom.com.co',
-    // P-L21 (client, 2026-09-29).
-    whatsapp: 'https://gruposhalom.trb.ai/wa/13ukPvL7',
+    // P-L21 (client, 2026-09-29)
+    whatsapp: WHATSAPP_URL,
     // PENDING P-L18
     mapsUrl: null,
     // PENDING P-L15

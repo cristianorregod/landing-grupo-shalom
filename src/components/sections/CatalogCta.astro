@@ -24,7 +24,14 @@ const linkClass = 'underline decoration-brand-green underline-offset-4 hover:tex
     <br />o{' '}
     {quoteByCategory ? (
       // The period lives inside the link: Astro keeps template line breaks as spaces.
-      <a href={quoteByCategory} class={linkClass}>
+      <a
+        href={quoteByCategory}
+        class={linkClass}
+        {...(quoteByCategory.startsWith('http') && {
+          target: '_blank',
+          rel: 'noopener noreferrer',
+        })}
+      >
         solicite una cotización por categoría.
       </a>
     ) : (
