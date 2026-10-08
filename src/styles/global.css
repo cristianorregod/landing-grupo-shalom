@@ -24,6 +24,15 @@
   --color-cta-to: #25253b;
 
   --container-content: 76rem;
+
+  /* Marquee: the track holds two identical lists, so -50% is one full loop. */
+  --animate-marquee: marquee 60s linear infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 @layer base {

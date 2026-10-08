@@ -1,0 +1,86 @@
+---
+/**
+ * Continuous right-to-left marquee, CSS-driven. Items are passed as `<li>`
+ * children and rendered twice so the loop is seamless (the copy is hidden from
+ * assistive tech). Pauses on hover, while a link inside has focus and with the pause button
+ * (WCAG 2.2.2). With `prefers-reduced-motion` it becomes a static row that can
+ * be scrolled by hand.
+ */
+interface Props {
+  label: string;
+  /** Seconds for one full loop. */
+  duration?: number;
+  /** Tailwind classes for the gap between items; applied as gap and trailing padding. */
+  gapClass?: string;
+  class?: string;
+}
+
+const {
+  label,
+  duration = 60,
+  gapClass = 'gap-x-6 pr-6 sm:gap-x-10 sm:pr-10 lg:gap-x-14 lg:pr-14',
+  class: className,
+} = Astro.props;
+
+const items = await Astro.slots.render('default');
+const listClass = ['flex shrink-0 items-center', gapClass];
+---
+
+<shalom-marquee class:list={['group relative block', className]}>
+  <div
+    role="region"
+    aria-label={label}
+    class="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] motion-reduce:overflow-x-auto motion-reduce:scrollbar-none"
+  >
+    <div
+      data-track
+      class="flex w-max animate-marquee group-hover:[animation-play-state:paused] group-has-[a:focus-visible]:[animation-play-state:paused] group-data-[paused]:[animation-play-state:paused] motion-reduce:animate-none"
+      style={`animation-duration: ${duration}s`}
+    >
+      <ul class:list={listClass} set:html={items} />
+      <ul class:list={[listClass, 'motion-reduce:hidden']} aria-hidden="true" set:html={items} />
+    </div>
+  </div>
+
+  <button
+    type="button"
+    data-toggle
+    class="absolute top-1/2 right-2 z-10 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-ink/20 bg-white text-ink/80 shadow-sm hover:text-brand-blue motion-reduce:hidden sm:right-4"
+    aria-label="Pausar el movimiento de las marcas"
+    aria-pressed="false"
+  >
+    <svg data-icon-pause viewBox="0 0 24 24" class="size-4" fill="currentColor" aria-hidden="true">
+      <path d="M7 5h4v14H7zM13 5h4v14h-4z"></path>
+    </svg>
+    <svg
+      data-icon-play
+      viewBox="0 0 24 24"
+      class="ml-0.5 hidden size-4"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M8 5v14l11-7z"></path>
+    </svg>
+  </button>
+</shalom-marquee>
+
+<script>
+  class ShalomMarquee extends HTMLElement {
+    connectedCallback() {
+      const toggle = this.querySelector<HTMLButtonElement>('[data-toggle]');
+      if (!toggle) return;
+      toggle.addEventListener('click', () => {
+        const paused = this.toggleAttribute('data-paused');
+        toggle.setAttribute('aria-pressed', String(paused));
+        toggle.setAttribute(
+          'aria-label',
+          paused ? 'Reanudar el movimiento de las marcas' : 'Pausar el movimiento de las marcas',
+        );
+        toggle.querySelector('[data-icon-pause]')!.classList.toggle('hidden', paused);
+        toggle.querySelector('[data-icon-play]')!.classList.toggle('hidden', !paused);
+      });
+    }
+  }
+
+  customElements.define('shalom-marquee', ShalomMarquee);
+</script>
