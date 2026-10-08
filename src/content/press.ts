@@ -44,9 +44,8 @@ export const pressNotes: PressNote[] = [
   {
     title: 'Shalom garantiza abastecimiento de alimentos a entidades gubernamentales',
     image: press4,
-    // PENDING P-L9: the delivered link duplicates the previous note; outlet and URL to be confirmed.
-    outlet: null,
-    href: null,
+    outlet: 'Technocio',
+    href: 'https://www.technocio.com/shalom-garantiza-abastecimiento-de-alimentos-a-entidades-gubernamentales/',
   },
   {
     title: '¿Quién es el rey de las anchetas? Este empresario se corona cada diciembre',
