@@ -53,6 +53,9 @@ export interface SiteConfig {
  */
 const WHATSAPP_URL = 'https://gruposhalom.trb.ai/wa/13ukPvL7';
 
+/** Catalog brochure delivered by the client (2026-10-07), served from `public/`. */
+const CATALOG_PDF = '/catalogo-grupo-shalom.pdf';
+
 const anchors = {
   guarantee: '#garantia',
   trajectory: '#trayectoria',
@@ -86,10 +89,10 @@ export const site: SiteConfig = {
   links: {
     // P-L1 (client, 2026-10-03): all "Solicitar cotización" buttons.
     quote: WHATSAPP_URL,
-    // PENDING P-L10
-    catalog: null,
-    // PENDING P-L11
-    portfolioPdf: null,
+    // P-L10 (client, 2026-10-07): "Ver catálogo completo" opens the brochure PDF.
+    catalog: CATALOG_PDF,
+    // P-L11 (client, 2026-10-07)
+    portfolioPdf: CATALOG_PDF,
     // P-L12 (client, 2026-10-03)
     quoteByCategory: WHATSAPP_URL,
     // P-L14 (client, 2026-10-03)

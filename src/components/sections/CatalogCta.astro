@@ -12,7 +12,9 @@ const linkClass = 'underline decoration-brand-green underline-offset-4 hover:tex
 ---
 
 <div class:list={['flex flex-col items-start gap-4', className]}>
-  <Button href={catalog}>Ver catálogo completo</Button>
+  <Button href={catalog} external>
+    Ver catálogo completo
+  </Button>
   <p class="text-base text-ink/90 sm:text-lg">
     {portfolioPdf ? (
       <a href={portfolioPdf} target="_blank" rel="noopener noreferrer" class={linkClass}>
