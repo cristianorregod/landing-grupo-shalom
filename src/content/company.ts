@@ -14,7 +14,24 @@ export const finalCta = {
     'Hablemos de la capacidad que su empresa o entidad necesita.',
     'Un equipo especializado le responde en menos de 24 horas hábiles.',
   ],
-  formTitle: 'Formulario según necesidades',
+  form: {
+    title: 'Déjenos sus datos',
+    lead: 'Un asesor le contactará en menos de 24 horas hábiles.',
+    fields: {
+      name: 'Nombre completo',
+      whatsapp: 'WhatsApp',
+      email: 'Correo electrónico',
+    },
+    consent: 'Autorizo el tratamiento de mis datos personales de acuerdo con la',
+    consentLink: 'política de tratamiento de datos',
+    submit: 'Enviar',
+    sending: 'Enviando…',
+    success: '¡Gracias! Recibimos sus datos y pronto le contactaremos.',
+    error: 'No pudimos enviar sus datos. Inténtelo de nuevo o escríbanos por WhatsApp.',
+    // Shown while no endpoint is configured (P-L15).
+    unavailable:
+      'El formulario estará disponible muy pronto. Mientras tanto, escríbanos por WhatsApp.',
+  },
 };
 
 export const footer = {

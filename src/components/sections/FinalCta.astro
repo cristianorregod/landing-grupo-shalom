@@ -2,11 +2,11 @@
 import { Image } from 'astro:assets';
 import Container from '../ui/Container.astro';
 import Button from '../ui/Button.astro';
+import ContactForm from './ContactForm.astro';
 import { site, whatsappHref } from '../../config/site';
 import { finalCta } from '../../content/company';
 import isotype from '../../assets/logos/shalom-isotype.webp';
 
-const { formMode, formUrl } = site.contact;
 // PENDING P-L14: defaults to WhatsApp when no advisor link is set.
 const advisorHref = site.links.advisor ?? whatsappHref();
 ---
@@ -42,27 +42,8 @@ const advisorHref = site.links.advisor ?? whatsappHref();
       </div>
     </div>
 
-    <!-- PENDING P-L15: placeholder card, embedded form or button. -->
     <div class="rounded-3xl bg-white p-6 text-ink shadow-xl shadow-navy/20 sm:p-8">
-      <h3 class="text-center text-xl text-brand-blue">{finalCta.formTitle}</h3>
-      {formMode === 'embed' && formUrl ? (
-        <iframe
-          src={formUrl}
-          title={finalCta.formTitle}
-          loading="lazy"
-          class="mt-4 h-[32rem] w-full rounded-xl border-0"
-        ></iframe>
-      ) : formMode === 'button' && formUrl ? (
-        <div class="mt-6 flex justify-center">
-          <Button href={formUrl} variant="blue">
-            Diligenciar formulario
-          </Button>
-        </div>
-      ) : (
-        <p class="mt-6 pb-10 text-center text-sm text-ink/80">
-          Pronto podrá enviarnos su solicitud desde aquí.
-        </p>
-      )}
+      <ContactForm />
     </div>
   </Container>
 </section>

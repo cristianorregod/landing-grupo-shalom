@@ -40,8 +40,14 @@ export interface SiteConfig {
     /** WhatsApp redirect link (the prefilled message is managed by the provider). */
     whatsapp: string | null;
     mapsUrl: Href;
-    formMode: 'placeholder' | 'embed' | 'button';
-    formUrl: Href;
+    /**
+     * Contact form submission endpoint (form service that accepts a FormData
+     * POST and answers JSON, e.g. Web3Forms or Formspree). While null the form
+     * validates but does not send, and points the visitor to WhatsApp instead.
+     */
+    formEndpoint: Href;
+    /** Extra hidden fields required by the form service (e.g. its access key). */
+    formHiddenFields: Record<string, string>;
   };
   clients: { visible: boolean };
   social: { label: string; href: string }[];
@@ -49,7 +55,7 @@ export interface SiteConfig {
 
 /**
  * Client decision (2026-10-03): every quote, contact and WhatsApp link goes to
- * this single WhatsApp redirect. The contact form card is still pending (P-L15).
+ * this single WhatsApp redirect.
  */
 const WHATSAPP_URL = 'https://gruposhalom.trb.ai/wa/13ukPvL7';
 
@@ -120,9 +126,9 @@ export const site: SiteConfig = {
     whatsapp: WHATSAPP_URL,
     // PENDING P-L18
     mapsUrl: null,
-    // PENDING P-L15
-    formMode: 'placeholder',
-    formUrl: null,
+    // PENDING P-L15: form is built (name, WhatsApp, email); destination not decided yet.
+    formEndpoint: null,
+    formHiddenFields: {},
   },
 
   // PENDING P-C4: authorization to display client logos.
