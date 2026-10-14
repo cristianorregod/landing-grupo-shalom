@@ -121,10 +121,10 @@ const topicOptions = message.topics.map((topic) => ({ value: topic, label: topic
     <Container class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div>
         <h2 class="text-4xl leading-[1.05] font-bold text-balance sm:text-5xl">{message.title}</h2>
-        <p class="mt-4 max-w-md text-base text-white/90 sm:text-lg">{message.lead}</p>
+        <p class="mt-4 max-w-md text-base text-white sm:text-lg">{message.lead}</p>
         <dl class="mt-8 space-y-5 text-base">
           <div>
-            <dt class="text-sm font-bold tracking-wide text-white/80 uppercase">Correo</dt>
+            <dt class="text-sm font-bold tracking-wide text-white uppercase">Correo</dt>
             <dd class="mt-1">
               <a href={`mailto:${email}`} class="break-all underline-offset-2 hover:underline">
                 {email}
@@ -132,7 +132,7 @@ const topicOptions = message.topics.map((topic) => ({ value: topic, label: topic
             </dd>
           </div>
           <div>
-            <dt class="text-sm font-bold tracking-wide text-white/80 uppercase">WhatsApp</dt>
+            <dt class="text-sm font-bold tracking-wide text-white uppercase">WhatsApp</dt>
             <dd class="mt-1">
               <a
                 href={phone.whatsappHref}
@@ -145,7 +145,7 @@ const topicOptions = message.topics.map((topic) => ({ value: topic, label: topic
             </dd>
           </div>
           <div>
-            <dt class="text-sm font-bold tracking-wide text-white/80 uppercase">Síganos</dt>
+            <dt class="text-sm font-bold tracking-wide text-white uppercase">Síganos</dt>
             <dd class="mt-2">
               <ul class="flex flex-wrap gap-3">
                 {site.social.map((network) => (

@@ -7,7 +7,7 @@ import { navItems } from '../../content/navigation';
 import logo from '../../assets/logos/shalom-color.webp';
 
 // Highlight the menu item of the current internal page (e.g. /contacto).
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const currentPath = Astro.url.pathname.replace(/(index)?\.html$/, '').replace(/\/$/, '') || '/';
 const isCurrentPage = (href: string) =>
   href.startsWith('/') && !href.includes('#') && href === currentPath;
 ---
@@ -41,7 +41,7 @@ const isCurrentPage = (href: string) =>
               data-nav-section={item.section}
               aria-current={isCurrentPage(item.href) ? 'page' : undefined}
               {...(item.newTab && { target: '_blank', rel: 'noopener noreferrer' })}
-              class="block border-b-2 border-transparent py-1 text-sm whitespace-nowrap text-brand-blue transition-colors hover:text-brand-green aria-[current]:border-brand-green aria-[current]:font-bold aria-[current]:text-brand-green"
+              class="block border-b-2 border-transparent py-1 text-sm whitespace-nowrap text-brand-blue transition-colors hover:text-brand-green-text aria-[current]:border-brand-green aria-[current]:font-bold aria-[current]:text-brand-green-text"
             >
               {item.label}
             </a>
@@ -113,7 +113,7 @@ const isCurrentPage = (href: string) =>
             data-nav-section={item.section}
             aria-current={isCurrentPage(item.href) ? 'page' : undefined}
             {...(item.newTab && { target: '_blank', rel: 'noopener noreferrer' })}
-            class="block py-4 text-lg text-brand-blue aria-[current]:font-bold aria-[current]:text-brand-green"
+            class="block py-4 text-lg text-brand-blue aria-[current]:font-bold aria-[current]:text-brand-green-text"
           >
             {item.label}
           </a>

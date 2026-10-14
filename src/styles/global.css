@@ -11,6 +11,8 @@
   --font-sans: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
 
   --color-brand-blue: #326bd8;
+  /* Brand blue for small text on light grays (4.5:1 on white, mist, beige and sky). */
+  --color-brand-blue-text: #2c5fc0;
   --color-brand-green: #65a63e;
   /* Green for small text on light backgrounds (4.5:1); buttons keep brand-green. */
   --color-brand-green-text: #436e29;

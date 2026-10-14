@@ -31,7 +31,11 @@ const videoOnly = variant === 'video-only';
         class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-1000 data-[playing]:opacity-100"
       ></div>
       {!videoOnly && (
-        <div class="absolute inset-0 bg-linear-to-r from-navy/80 via-navy/45 to-navy/10" />
+        <>
+          <div class="absolute inset-0 bg-linear-to-r from-navy/85 via-navy/65 to-navy/45" />
+          {/* Extra shade under the stats row, which spans the full width. */}
+          <div class="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-navy/80 to-transparent" />
+        </>
       )}
     </div>
 

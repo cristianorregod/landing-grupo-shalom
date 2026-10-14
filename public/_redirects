@@ -1,0 +1,4 @@
+# Old URLs of the current gruposhalom.com.co site -> new pages (Netlify).
+/about-us   /quienes-somos            301
+/jobs       /trabaja-con-nosotros     301
+/privacy    /politica-de-privacidad   301

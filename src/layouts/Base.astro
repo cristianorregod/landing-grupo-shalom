@@ -11,7 +11,9 @@ interface Props {
 
 const { title = site.title, description = site.description, image = '/og-image.jpg' } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site);
+// build.format 'file' exposes '/contacto.html' and '/index.html'; publish clean URLs.
+const cleanPath = Astro.url.pathname.replace(/(index)?\.html$/, '').replace(/(.)\/$/, '$1');
+const canonical = new URL(cleanPath, Astro.site);
 const imageUrl = new URL(image, Astro.site);
 const ga4Id = site.analytics.ga4Id;
 ---

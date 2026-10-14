@@ -188,6 +188,24 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 
 ---
 
+## Phase 10 — Client change request (2026-10-14, `docs/New/changes.md`)
+
+- [x] Floating WhatsApp button in WhatsApp brand green (`#25D366`, official glyph from `simple-icons`)
+- [x] Hero: video disabled, static image (`hero-warehouse.webp`); set `site.hero.youtubeId` to bring the video back. Stronger overlay for text legibility over the lighter photo
+- [x] Menu in home section order: Trayectoria, Garantía & Capacidad, HoReCa, Catálogo, Shalom, Contacto. "Contacto" opens `/contacto`; HoReCa unchanged
+- [x] Footer: pedidos@ email, WhatsApp +57 314 255 5518 (direct link with greeting), Instagram/Facebook/YouTube/TikTok, links to Quiénes somos, Trabaja con nosotros, Contacto and Política de privacidad
+- [x] Multi-page base: `layouts/Page.astro`, root-relative home anchors (`/#garantia`), current page highlighted in the menu, clean URLs without trailing slash, canonical per page
+- [x] `/quienes-somos` from `Web - Quiénes somos.pdf`; "Ver más" button in the home About section
+- [x] `/trabaja-con-nosotros` from `WEB - JOBS.pdf`; vacancies list (empty state today) and a form that composes the message for WhatsApp or email (pedidos@)
+- [x] `/politica-de-privacidad` with the text of `gruposhalom.com.co/privacy`
+- [x] `/contacto` adapted from the reference HTML, using the `changes.md` data; compose form (WhatsApp or email)
+- [ ] `/contacto`: addresses of Planta Montevideo, Planta Veraguas and Tienda de la 31 (shown as "Dirección próximamente") — **client pending**
+- [x] Redirects from the current site URLs (`/about-us`, `/jobs`, `/privacy`) in `public/_redirects` (Netlify)
+- [x] QA: 5 pages, no overflow at 390/1440, internal links and anchors resolve, Chromium + Firefox without JS errors. Lighthouse mobile: Performance 98–100, Accessibility 96–100, Best Practices 100, SEO 100
+- [x] Contrast: `brand-blue-text` (#2C5FC0) for blue text on light grays; white text on the blue sections. Only open issue: white on button green (#65A63E), pending client decision
+
+---
+
 ## Pending tracker
 
 Mirrors the client pendings in the scope document. Update the status column as items arrive.
@@ -265,3 +283,4 @@ Mirrors the client pendings in the scope document. Update the status column as i
 | 2026-10-07 | Catalog brochure (`docs/PENDIENTES/BROCHURE - DIGITAL.pdf`, 9 pages, 2.5 MB) published as `public/catalogo-grupo-shalom.pdf`. "Ver catálogo completo" (x2) and "Descargue el portafolio en PDF" (x2) open it in a new tab.                                                                                                                                                                                                                                                                                                                    |
 | 2026-10-07 | Press note 4 link corrected by the client (Technocio). All 6 "Leer más" links are active.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | 2026-10-13 | Contact form built in the final CTA card (`ContactForm.astro`): name, WhatsApp and email with native validation, Ley 1581 consent checkbox, honeypot, and success/error states. Sending is off until `contact.formEndpoint` is set (any service accepting a FormData POST with a JSON answer, e.g. Web3Forms or Formspree); meanwhile a valid submit shows a notice with the WhatsApp link. Lighthouse accessibility is now 97: the white-on-green button contrast (open decision) became measurable on "Ver catálogo completo" and "Enviar". |
+| 2026-10-14 | Client change request implemented: 4 new pages (Quiénes somos, Trabaja con nosotros, Contacto, Política de privacidad), static hero image, green WhatsApp button, sequential menu, new contact data and social links. Only pending: addresses of the 3 locations.                                                                                                                                                                                                                                                                             |

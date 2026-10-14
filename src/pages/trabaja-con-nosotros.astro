@@ -82,8 +82,8 @@ const areaOptions = jobAreas.map((area) => ({ value: area.title, label: area.tit
     <Container class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
       <div>
         <h2 class="text-4xl leading-[1.05] font-bold text-balance sm:text-5xl">{apply.title}</h2>
-        <p class="mt-4 max-w-md text-base text-white/90 sm:text-lg">{apply.lead}</p>
-        <ul class="mt-6 max-w-md space-y-3 text-base text-white/90">
+        <p class="mt-4 max-w-md text-base text-white sm:text-lg">{apply.lead}</p>
+        <ul class="mt-6 max-w-md space-y-3 text-base text-white">
           {apply.steps.map((step) => (
             <li class="relative pl-5 before:absolute before:top-[0.6em] before:left-0 before:size-1.5 before:rounded-full before:bg-white">
               {step}
