@@ -5,7 +5,7 @@
  */
 interface Props {
   href: string | null;
-  variant?: 'primary' | 'outline-light' | 'light' | 'blue';
+  variant?: 'primary' | 'outline-light' | 'light' | 'blue' | 'outline-blue';
   size?: 'sm' | 'md';
   external?: boolean;
   /** Uppercase label. Defaults to true except for the `light` variant. */
@@ -30,6 +30,7 @@ const variants = {
   'outline-light': 'border-2 border-white text-white hover:bg-white/10',
   light: 'bg-white text-brand-blue hover:bg-white/90',
   blue: 'bg-brand-blue text-white hover:bg-brand-blue/90',
+  'outline-blue': 'border-2 border-brand-blue text-brand-blue hover:bg-brand-blue/10',
 } as const;
 
 const sizes = {

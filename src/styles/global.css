@@ -20,6 +20,8 @@
   /* Darkened from the design (#6f87c7) to reach 4.5:1 on white, beige and sky. */
   --color-eyebrow: #50618f;
   --color-beige: #efe9e8;
+  /* Neutral gray used by the internal pages' designs. */
+  --color-mist: #f2f2f2;
   --color-cta-from: #4983cb;
   --color-cta-to: #25253b;
 

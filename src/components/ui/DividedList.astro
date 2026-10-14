@@ -1,0 +1,56 @@
+---
+/**
+ * List of items separated by blue rules, as used across the internal pages.
+ * `split`: title on the left, description (and optional bullets) on the right
+ * from md up. `stack`: title above the description, for narrow columns.
+ */
+interface Item {
+  title: string;
+  body?: string;
+  bullets?: string[];
+}
+
+interface Props {
+  items: Item[];
+  layout?: 'split' | 'stack';
+  /** Blue titles (e.g. certifications) instead of ink. */
+  accentTitles?: boolean;
+  class?: string;
+}
+
+const { items, layout = 'split', accentTitles = false, class: className } = Astro.props;
+---
+
+<ul class:list={['border-b border-brand-blue/60', className]}>
+  {items.map((item) => (
+    <li
+      class:list={[
+        'border-t border-brand-blue/60 py-6',
+        layout === 'split' && 'md:grid md:grid-cols-[2fr_3fr] md:gap-10',
+      ]}
+    >
+      <h3
+        class:list={[
+          'text-xl leading-tight font-bold text-balance sm:text-2xl',
+          accentTitles ? 'text-brand-blue' : 'text-ink',
+        ]}
+      >
+        {item.title}
+      </h3>
+      {(item.body || item.bullets) && (
+        <div class:list={['text-base text-ink/90', layout === 'split' ? 'mt-3 md:mt-0' : 'mt-2']}>
+          {item.body && <p>{item.body}</p>}
+          {item.bullets && (
+            <ul class="mt-4 space-y-2 text-sm">
+              {item.bullets.map((bullet) => (
+                <li class="relative pl-5 before:absolute before:top-[0.55em] before:left-0 before:size-1.5 before:rounded-full before:bg-brand-blue">
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+    </li>
+  ))}
+</ul>

@@ -3,6 +3,8 @@ import Container from '../ui/Container.astro';
 import Eyebrow from '../ui/Eyebrow.astro';
 import RichText from '../ui/RichText.astro';
 import ResponsiveImage from '../ui/ResponsiveImage.astro';
+import Button from '../ui/Button.astro';
+import { site } from '../../config/site';
 import { about } from '../../content/company';
 ---
 
@@ -23,6 +25,9 @@ import { about } from '../../content/company';
       <p class="mt-6 max-w-xl text-base text-ink/90 sm:text-lg">
         <RichText text={about.body} strongClass="font-bold text-navy" />
       </p>
+      <Button href={site.pages.about} variant="outline-blue" class="mt-8">
+        Ver más
+      </Button>
     </div>
   </Container>
 </section>

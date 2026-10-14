@@ -1,0 +1,67 @@
+---
+import Page from '../layouts/Page.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import CollageHero from '../components/ui/CollageHero.astro';
+import DividedList from '../components/ui/DividedList.astro';
+import ResponsiveImage from '../components/ui/ResponsiveImage.astro';
+import { site } from '../config/site';
+import { aboutPage } from '../content/about-page';
+
+const { seo, hero, identity, services, certifications } = aboutPage;
+---
+
+<Page title={seo.title} description={seo.description}>
+  <CollageHero title={hero.title} intro={hero.intro} photos={hero.photos}>
+    {hero.paragraphs.map((paragraph) => (
+      <p>{paragraph}</p>
+    ))}
+    <Fragment slot="actions">
+      <Button href={site.links.quote}>Solicitar cotización</Button>
+      <Button href={site.hero.capacityHref} variant="outline-blue">
+        Conozca nuestra capacidad
+      </Button>
+    </Fragment>
+  </CollageHero>
+
+  <section class="bg-mist py-16 lg:py-24">
+    <Container class="grid items-center gap-10 md:grid-cols-[2fr_3fr] lg:gap-16">
+      <ResponsiveImage
+        src={identity.image}
+        alt={identity.imageAlt}
+        widths={[300, 428]}
+        sizes="(min-width: 1216px) 420px, (min-width: 768px) 38vw, 100vw"
+        class="aspect-3/4 w-full rounded-3xl object-cover max-md:max-h-[30rem]"
+      />
+      <div>
+        <h2 class="text-3xl leading-tight font-bold text-balance text-ink sm:text-4xl">
+          {identity.title}
+        </h2>
+        <p class="mt-4 mb-8 text-base text-ink/90 sm:text-lg">{identity.body}</p>
+        <DividedList items={identity.items} layout="stack" />
+      </div>
+    </Container>
+  </section>
+
+  <section class="bg-white py-16 lg:py-24">
+    <Container>
+      <h2 class="text-4xl leading-[1.05] font-bold text-balance text-ink sm:text-5xl xl:text-[3.5rem]">
+        {services.title}
+      </h2>
+      <p class="mt-4 max-w-xl text-base text-ink/90 sm:text-lg">{services.lead}</p>
+      <DividedList items={services.items} class="mt-10" />
+    </Container>
+  </section>
+
+  <section class="bg-mist py-16 lg:py-24">
+    <Container class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <h2 class="text-4xl leading-[1.05] font-bold text-balance text-ink sm:text-5xl">
+          {certifications.title}
+        </h2>
+        <p class="mt-4 max-w-md text-base text-ink/90 sm:text-lg">{certifications.lead}</p>
+      </div>
+      <DividedList items={certifications.items} layout="stack" accentTitles />
+    </Container>
+  </section>
+</Page>
