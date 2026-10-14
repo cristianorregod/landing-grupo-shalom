@@ -1,0 +1,147 @@
+---
+/**
+ * Backend-free form: it composes a message from the fields and opens WhatsApp
+ * or the visitor's email client with it. Nothing is stored or sent by the site.
+ *
+ * Fields go in the default slot (any input/select/textarea with a `name`).
+ * `lines` are message templates; `{field}` placeholders are replaced with the
+ * field values and a line is dropped when any of its placeholders is empty.
+ */
+interface Props {
+  /** WhatsApp number in international format, digits only. */
+  phoneDigits: string;
+  email: string;
+  /** Email subject template, e.g. "Hoja de vida – {area}". */
+  subject: string;
+  lines: string[];
+  privacyHref: string | null;
+  class?: string;
+}
+
+const { phoneDigits, email, subject, lines, privacyHref, class: className } = Astro.props;
+
+const channelBase =
+  'inline-flex w-full items-center justify-center rounded-full px-5 py-3 text-sm font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue';
+---
+
+<shalom-compose-form
+  class:list={['block', className]}
+  data-phone={phoneDigits}
+  data-email={email}
+  data-subject={subject}
+  data-lines={JSON.stringify(lines)}
+>
+  <form class="space-y-4">
+    <slot />
+
+    <div class="grid gap-3 pt-2 sm:grid-cols-2">
+      <button
+        type="submit"
+        name="channel"
+        value="whatsapp"
+        class:list={[channelBase, 'bg-brand-blue text-white hover:bg-brand-blue/90']}
+      >
+        Enviar por WhatsApp
+      </button>
+      <button
+        type="submit"
+        name="channel"
+        value="email"
+        class:list={[
+          channelBase,
+          'border-2 border-brand-blue text-brand-blue hover:bg-brand-blue/10',
+        ]}
+      >
+        Enviar por correo
+      </button>
+    </div>
+
+    <p class="text-xs leading-relaxed text-ink/80">
+      {
+        'Sus datos solo se usan para armar el mensaje en su dispositivo. Al enviarlo, acepta su tratamiento según nuestra '
+      }
+      {privacyHref ? (
+        <a
+          href={privacyHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-medium text-brand-blue underline underline-offset-2"
+        >
+          política de privacidad.
+        </a>
+      ) : (
+        'política de privacidad.'
+      )}
+    </p>
+
+    <p
+      data-status
+      role="status"
+      aria-live="polite"
+      class="hidden rounded-xl bg-sky px-4 py-3 text-sm text-ink"
+    ></p>
+  </form>
+</shalom-compose-form>
+
+<script>
+  class ShalomComposeForm extends HTMLElement {
+    connectedCallback() {
+      const form = this.querySelector('form')!;
+      form.addEventListener('submit', (event) => {
+        // Native validation has already passed when this fires.
+        event.preventDefault();
+        const channel = (event.submitter as HTMLButtonElement | null)?.value ?? 'whatsapp';
+        const data = new FormData(form);
+        const value = (key: string) => {
+          const field = form.elements.namedItem(key);
+          // Selects send the visible label, not the option value.
+          if (field instanceof HTMLSelectElement)
+            return field.selectedOptions[0]?.text.trim() ?? '';
+          return String(data.get(key) ?? '').trim();
+        };
+        const fill = (template: string) => {
+          let empty = false;
+          const text = template.replace(/\{(\w+)\}/g, (_, key: string) => {
+            const v = value(key);
+            if (!v) empty = true;
+            return v;
+          });
+          return empty ? null : text;
+        };
+
+        const lines: string[] = JSON.parse(this.dataset.lines!);
+        const message = lines
+          .map(fill)
+          .filter((line): line is string => line !== null)
+          .join('\n');
+
+        const url =
+          channel === 'email'
+            ? `mailto:${this.dataset.email}?subject=${encodeURIComponent(fill(this.dataset.subject!) ?? '')}&body=${encodeURIComponent(message)}`
+            : `https://api.whatsapp.com/send?phone=${this.dataset.phone}&text=${encodeURIComponent(message)}`;
+
+        if (channel === 'email') window.location.href = url;
+        else window.open(url, '_blank', 'noopener');
+
+        this.showStatus(channel, url);
+      });
+    }
+
+    private showStatus(channel: string, url: string) {
+      const status = this.querySelector<HTMLElement>('[data-status]')!;
+      const label = channel === 'email' ? 'su correo' : 'WhatsApp';
+      const link = document.createElement('a');
+      link.href = url;
+      link.className = 'font-bold underline underline-offset-2';
+      link.textContent = `Abrir ${label}`;
+      if (channel !== 'email') {
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+      }
+      status.replaceChildren(`Preparamos su mensaje en ${label}. Si no se abrió, `, link, '.');
+      status.classList.remove('hidden');
+    }
+  }
+
+  customElements.define('shalom-compose-form', ShalomComposeForm);
+</script>

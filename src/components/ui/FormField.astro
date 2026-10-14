@@ -1,0 +1,68 @@
+---
+/** Labeled input, select or textarea with the site's form styles. */
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  id: string;
+  name: string;
+  label: string;
+  as?: 'input' | 'select' | 'textarea';
+  type?: astroHTML.JSX.HTMLInputTypeAttribute;
+  required?: boolean;
+  /** Shown next to the label when the field is not required. */
+  optionalLabel?: boolean;
+  options?: Option[];
+  autocomplete?: string;
+  inputmode?: 'text' | 'tel' | 'email' | 'numeric';
+  pattern?: string;
+  title?: string;
+  placeholder?: string;
+  minlength?: number;
+  maxlength?: number;
+  rows?: number;
+}
+
+const {
+  id,
+  name,
+  label,
+  as = 'input',
+  type = 'text',
+  required = false,
+  optionalLabel = !required,
+  options = [],
+  rows = 4,
+  ...attrs
+} = Astro.props;
+
+const control =
+  'mt-1.5 w-full rounded-xl border border-ink/30 bg-white px-4 py-3 text-base text-ink placeholder:text-ink/50 focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/30 focus:outline-none';
+---
+
+<div>
+  <label for={id} class="block text-sm font-medium text-ink">
+    {label}
+    {optionalLabel && <span class="font-normal text-ink/70"> (opcional)</span>}
+  </label>
+  {as === 'select' ? (
+    <select id={id} name={name} required={required} class={control} {...attrs}>
+      {options.map((option) => (
+        <option value={option.value}>{option.label}</option>
+      ))}
+    </select>
+  ) : as === 'textarea' ? (
+    <textarea
+      id={id}
+      name={name}
+      required={required}
+      rows={rows}
+      class={control}
+      {...attrs}
+    ></textarea>
+  ) : (
+    <input id={id} name={name} type={type} required={required} class={control} {...attrs} />
+  )}
+</div>
