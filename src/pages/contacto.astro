@@ -1,0 +1,244 @@
+---
+import { siFacebook, siInstagram, siTiktok, siYoutube } from 'simple-icons';
+import Page from '../layouts/Page.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+import ComposeForm from '../components/ui/ComposeForm.astro';
+import FormField from '../components/ui/FormField.astro';
+import { site } from '../config/site';
+import { contactPage } from '../content/contact-page';
+
+const { seo, hero, paths, locations, message } = contactPage;
+const { phone, email } = site.contact;
+const telHref = `tel:+${phone.digits}`;
+const icons = {
+  instagram: siInstagram,
+  facebook: siFacebook,
+  youtube: siYoutube,
+  tiktok: siTiktok,
+};
+const mapsHref = (address: string, city: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${address}, ${city}, Colombia`)}`;
+const topicOptions = message.topics.map((topic) => ({ value: topic, label: topic }));
+---
+
+<Page title={seo.title} description={seo.description}>
+  <section class="bg-mist py-14 lg:py-20">
+    <Container class="grid items-center gap-10 lg:grid-cols-[3fr_2fr] lg:gap-16">
+      <div>
+        <span class="block h-1 w-16 bg-brand-blue" aria-hidden="true"></span>
+        <Eyebrow class="mt-5">{hero.eyebrow}</Eyebrow>
+        <h1 class="mt-3 text-4xl leading-[1.05] font-bold text-balance text-ink sm:text-5xl xl:text-[3.5rem]">
+          {hero.title}
+        </h1>
+        <p class="mt-6 max-w-xl text-base text-ink/90 sm:text-lg">{hero.body}</p>
+      </div>
+
+      <div class="rounded-3xl bg-white p-7 shadow-xl shadow-navy/10 sm:p-9">
+        <p class="text-sm font-medium text-ink/80">{hero.fastest}</p>
+        <p class="mt-2 text-2xl font-bold text-ink sm:text-3xl">{phone.display}</p>
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+          <Button href={phone.whatsappHref} variant="blue">
+            Abrir WhatsApp
+          </Button>
+          <Button href={telHref} variant="outline-blue">
+            Llamar ahora
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </section>
+
+  <section class="bg-white py-16 lg:py-24">
+    <Container>
+      <h2 class="text-4xl leading-[1.05] font-bold text-balance text-ink sm:text-5xl">
+        {paths.title}
+      </h2>
+      <p class="mt-4 text-base text-ink/90 sm:text-lg">{paths.lead}</p>
+      <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {paths.items.map((item) => (
+          <li class="flex flex-col items-start rounded-3xl bg-mist p-6 sm:p-7">
+            <h3 class="text-xl leading-tight font-bold text-balance text-ink">{item.title}</h3>
+            <p class="mt-3 mb-6 text-base text-ink/90">{item.body}</p>
+            <Button
+              href={item.href}
+              variant="outline-blue"
+              size="sm"
+              caps={false}
+              external={item.href?.endsWith('.pdf') || item.href?.startsWith('http')}
+              class="mt-auto"
+            >
+              {item.cta}
+            </Button>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  <section id="sedes" class="bg-mist py-16 lg:py-24">
+    <Container>
+      <h2 class="text-4xl leading-[1.05] font-bold text-balance text-ink sm:text-5xl">
+        {locations.title}
+      </h2>
+      <p class="mt-4 text-base text-ink/90 sm:text-lg">{locations.lead}</p>
+      <ul class="mt-10 grid gap-5 md:grid-cols-3">
+        {locations.items.map((location) => (
+          <li class="flex items-start gap-4 rounded-3xl bg-white p-6 sm:p-7">
+            <span class="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-brand-blue text-white">
+              <svg viewBox="0 0 24 24" class="size-6" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" />
+              </svg>
+            </span>
+            <div>
+              <h3 class="text-xl leading-tight font-bold text-ink">{location.name}</h3>
+              {location.address ? (
+                <>
+                  <p class="mt-2 text-base text-ink/90">
+                    {`${location.address}, ${location.city}`}
+                  </p>
+                  <a
+                    href={mapsHref(location.address, location.city)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="mt-3 inline-block text-sm font-bold text-brand-blue underline underline-offset-2"
+                  >
+                    Ver en el mapa
+                  </a>
+                </>
+              ) : (
+                <p class="mt-2 text-base text-ink/80">{`${location.city} · Dirección próximamente`}</p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </section>
+
+  <section id="mensaje" class="bg-brand-blue py-16 text-white lg:py-24">
+    <Container class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+      <div>
+        <h2 class="text-4xl leading-[1.05] font-bold text-balance sm:text-5xl">{message.title}</h2>
+        <p class="mt-4 max-w-md text-base text-white/90 sm:text-lg">{message.lead}</p>
+        <dl class="mt-8 space-y-5 text-base">
+          <div>
+            <dt class="text-sm font-bold tracking-wide text-white/80 uppercase">Correo</dt>
+            <dd class="mt-1">
+              <a href={`mailto:${email}`} class="break-all underline-offset-2 hover:underline">
+                {email}
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt class="text-sm font-bold tracking-wide text-white/80 uppercase">WhatsApp</dt>
+            <dd class="mt-1">
+              <a
+                href={phone.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="underline-offset-2 hover:underline"
+              >
+                {phone.display}
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt class="text-sm font-bold tracking-wide text-white/80 uppercase">Síganos</dt>
+            <dd class="mt-2">
+              <ul class="flex flex-wrap gap-3">
+                {site.social.map((network) => (
+                  <li>
+                    <a
+                      href={network.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${site.name} en ${network.label}`}
+                      class="flex size-10 items-center justify-center rounded-full bg-white/15 transition-colors hover:bg-white/30"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        class="size-5"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path d={icons[network.icon].path} />
+                      </svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="rounded-3xl bg-white p-6 text-ink shadow-xl shadow-navy/30 sm:p-8">
+        <h3 class="mb-5 text-xl font-bold">{message.formTitle}</h3>
+        <ComposeForm
+          phoneDigits={phone.digits}
+          email={email}
+          subject={message.subject}
+          lines={message.lines}
+          privacyHref={site.links.privacyPolicy}
+        >
+          <FormField
+            id="contact-page-name"
+            name="name"
+            label="Nombre"
+            required
+            autocomplete="name"
+            minlength={3}
+            maxlength={80}
+          />
+          <FormField
+            id="contact-page-company"
+            name="company"
+            label="Empresa"
+            autocomplete="organization"
+            maxlength={80}
+          />
+          <div class="grid gap-4 sm:grid-cols-2">
+            <FormField
+              id="contact-page-phone"
+              name="phone"
+              label="Teléfono"
+              type="tel"
+              inputmode="tel"
+              autocomplete="tel"
+              pattern="[0-9+\(\) \-]{7,20}"
+              title="Ingrese un número válido, por ejemplo 300 123 4567"
+            />
+            <FormField
+              id="contact-page-email"
+              name="email"
+              label="Correo electrónico"
+              type="email"
+              autocomplete="email"
+              maxlength={120}
+            />
+          </div>
+          <FormField
+            id="contact-page-topic"
+            name="topic"
+            label="Asunto"
+            as="select"
+            required
+            options={topicOptions}
+          />
+          <FormField
+            id="contact-page-message"
+            name="message"
+            label="Mensaje"
+            as="textarea"
+            required
+            minlength={5}
+            maxlength={1000}
+            rows={4}
+          />
+        </ComposeForm>
+      </div>
+    </Container>
+  </section>
+</Page>
