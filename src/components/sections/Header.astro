@@ -5,6 +5,11 @@ import Button from '../ui/Button.astro';
 import { site } from '../../config/site';
 import { navItems } from '../../content/navigation';
 import logo from '../../assets/logos/shalom-color.webp';
+
+// Highlight the menu item of the current internal page (e.g. /contacto).
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrentPage = (href: string) =>
+  href.startsWith('/') && !href.includes('#') && href === currentPath;
 ---
 
 <a
@@ -16,7 +21,7 @@ import logo from '../../assets/logos/shalom-color.webp';
 
 <header class="fixed inset-x-0 top-0 z-40 border-b border-brand-blue/30 bg-white/95 backdrop-blur-sm">
   <Container class="flex h-16 items-center justify-between gap-6 lg:h-20">
-    <a href="#top" class="shrink-0" aria-label={`${site.name}, ir al inicio`}>
+    <a href="/" class="shrink-0" aria-label={`${site.name}, ir al inicio`}>
       <Image
         src={logo}
         alt={site.name}
@@ -34,8 +39,9 @@ import logo from '../../assets/logos/shalom-color.webp';
             <a
               href={item.href}
               data-nav-section={item.section}
+              aria-current={isCurrentPage(item.href) ? 'page' : undefined}
               {...(item.newTab && { target: '_blank', rel: 'noopener noreferrer' })}
-              class="block border-b-2 border-transparent py-1 text-sm whitespace-nowrap text-brand-blue transition-colors hover:text-brand-green aria-[current=true]:border-brand-green aria-[current=true]:font-bold aria-[current=true]:text-brand-green"
+              class="block border-b-2 border-transparent py-1 text-sm whitespace-nowrap text-brand-blue transition-colors hover:text-brand-green aria-[current]:border-brand-green aria-[current]:font-bold aria-[current]:text-brand-green"
             >
               {item.label}
             </a>
@@ -105,8 +111,9 @@ import logo from '../../assets/logos/shalom-color.webp';
           <a
             href={item.href}
             data-nav-section={item.section}
+            aria-current={isCurrentPage(item.href) ? 'page' : undefined}
             {...(item.newTab && { target: '_blank', rel: 'noopener noreferrer' })}
-            class="block py-4 text-lg text-brand-blue aria-[current=true]:font-bold aria-[current=true]:text-brand-green"
+            class="block py-4 text-lg text-brand-blue aria-[current]:font-bold aria-[current]:text-brand-green"
           >
             {item.label}
           </a>

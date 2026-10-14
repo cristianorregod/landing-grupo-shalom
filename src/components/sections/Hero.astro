@@ -4,7 +4,8 @@ import Button from '../ui/Button.astro';
 import ResponsiveImage from '../ui/ResponsiveImage.astro';
 import { site } from '../../config/site';
 import { hero } from '../../content/hero';
-import poster from '../../assets/images/hero-earth.webp';
+// Client request (2026-10-14): static image for now; the video returns later.
+import poster from '../../assets/images/hero-warehouse.webp';
 
 const { youtubeId, variant, capacityHref } = site.hero;
 const videoOnly = variant === 'video-only';

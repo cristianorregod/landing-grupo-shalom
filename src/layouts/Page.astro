@@ -1,0 +1,26 @@
+---
+/**
+ * Shared page shell: SEO head (Base), header, main content, footer and the
+ * floating WhatsApp button. `main#top` is the skip-link target on every page.
+ */
+import Base from './Base.astro';
+import Header from '../components/sections/Header.astro';
+import Footer from '../components/sections/Footer.astro';
+import WhatsAppFab from '../components/sections/WhatsAppFab.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <Header />
+  <main id="top" class="pt-16 lg:pt-20">
+    <slot />
+  </main>
+  <Footer />
+  <WhatsAppFab />
+</Base>

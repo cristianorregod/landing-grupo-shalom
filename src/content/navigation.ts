@@ -10,10 +10,11 @@ export interface NavItem {
 }
 
 export const navItems: NavItem[] = [
-  { label: 'Garantía & Capacidad', href: site.anchors.guarantee, section: 'garantia' },
+  // Same order as the sections on the home page (client request, 2026-10-14).
   { label: 'Trayectoria', href: site.anchors.trajectory, section: 'trayectoria' },
+  { label: 'Garantía & Capacidad', href: site.anchors.guarantee, section: 'garantia' },
   { label: 'HoReCa', href: site.nav.horeca },
   { label: 'Catálogo', href: site.anchors.catalog, section: 'catalogo' },
   { label: 'Shalom', href: site.nav.shalom, section: 'quienes-somos' },
-  { label: 'Contacto', href: site.nav.contact, newTab: true },
+  { label: 'Contacto', href: site.nav.contact },
 ];
