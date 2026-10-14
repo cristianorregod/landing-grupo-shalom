@@ -1,0 +1,32 @@
+---
+import Page from '../layouts/Page.astro';
+import Container from '../components/ui/Container.astro';
+import Eyebrow from '../components/ui/Eyebrow.astro';
+// Transcribed from https://gruposhalom.com.co/privacy (client, 2026-10-14).
+import policy from '../content/privacy-policy.html?raw';
+---
+
+<Page
+  title="Política de privacidad | Grupo Shalom"
+  description="Política de privacidad, tratamiento de datos personales y cookies de Grupo Empresarial Shalom S.A.S., conforme a la Ley 1581 de 2012."
+>
+  <section class="bg-mist py-14 lg:py-20">
+    <Container>
+      <span class="block h-1 w-16 bg-brand-blue" aria-hidden="true"></span>
+      <Eyebrow class="mt-5">Grupo Empresarial Shalom S.A.S.</Eyebrow>
+      <h1 class="mt-3 text-4xl leading-[1.05] font-bold text-balance text-ink sm:text-5xl">
+        Política de privacidad
+      </h1>
+      <p class="mt-4 max-w-2xl text-base text-ink/90 sm:text-lg">
+        Autorización para el tratamiento de datos, política de cookies y procedimientos sobre el
+        tratamiento de datos personales.
+      </p>
+    </Container>
+  </section>
+
+  <section class="bg-white py-14 lg:py-20">
+    <Container>
+      <article class="legal-content" set:html={policy} />
+    </Container>
+  </section>
+</Page>

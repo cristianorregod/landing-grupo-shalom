@@ -70,3 +70,48 @@
     display: none;
   }
 }
+
+/* Long-form legal text (privacy policy). Content comes as plain HTML. */
+@layer components {
+  .legal-content {
+    @apply max-w-3xl text-base leading-relaxed text-ink/90;
+
+    & h2 {
+      @apply mt-14 border-t border-brand-blue/60 pt-8 text-xl leading-tight font-bold text-balance text-ink first:mt-0 first:border-t-0 first:pt-0 sm:text-2xl;
+    }
+    & h3 {
+      @apply mt-8 text-base font-bold text-ink sm:text-lg;
+    }
+    & p {
+      @apply mt-4;
+    }
+    & ul,
+    & ol {
+      @apply mt-4 space-y-2 pl-5;
+    }
+    & ul {
+      @apply list-disc;
+    }
+    & li::marker {
+      @apply text-brand-blue;
+    }
+    & a {
+      @apply font-medium break-words text-brand-blue underline underline-offset-2;
+    }
+    & strong {
+      @apply font-bold text-ink;
+    }
+    & table {
+      @apply mt-6 block w-full overflow-x-auto text-left text-sm sm:table;
+    }
+    & caption {
+      @apply pb-2 text-left font-bold text-ink;
+    }
+    & th {
+      @apply border-b-2 border-brand-blue/60 px-3 py-2 font-bold text-ink;
+    }
+    & td {
+      @apply border-b border-ink/15 px-3 py-2 align-top;
+    }
+  }
+}
