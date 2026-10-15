@@ -30,6 +30,32 @@ const ga4Id = site.analytics.ga4Id;
     <meta name="theme-color" content="#326bd8" />
     <link rel="preload" href={montserratLatin} as="font" type="font/woff2" crossorigin />
 
+    <!-- Scroll reveal: elements are hidden (global.css) only once this flag is set, and each one is revealed once. -->
+    <script is:inline>
+      if ('IntersectionObserver' in window) {
+        document.documentElement.classList.add('js-reveal');
+        document.addEventListener('DOMContentLoaded', () => {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              let step = 0;
+              for (const { isIntersecting, target } of entries) {
+                if (!isIntersecting) continue;
+                // Stagger siblings revealed together, capped so long lists do not lag.
+                if (target.parentElement.hasAttribute('data-reveal-stagger')) {
+                  target.style.setProperty('--reveal-delay', `${Math.min(step++, 5) * 70}ms`);
+                }
+                target.classList.add('is-revealed');
+                observer.unobserve(target);
+              }
+            },
+            { threshold: 0.15, rootMargin: '0px 0px -10% 0px' },
+          );
+          document
+            .querySelectorAll('[data-reveal], [data-reveal-stagger] > *')
+            .forEach((el) => observer.observe(el));
+        });
+      }
+    </script>
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

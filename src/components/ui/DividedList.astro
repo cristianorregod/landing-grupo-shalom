@@ -3,6 +3,7 @@
  * List of items separated by blue rules, as used across the internal pages.
  * `split`: title on the left, description (and optional bullets) on the right
  * from md up. `stack`: title above the description, for narrow columns.
+ * Items reveal on scroll with a stagger (never used above the fold).
  */
 interface Item {
   title: string;
@@ -21,7 +22,7 @@ interface Props {
 const { items, layout = 'split', accentTitles = false, class: className } = Astro.props;
 ---
 
-<ul class:list={['border-b border-brand-blue/60', className]}>
+<ul class:list={['border-b border-brand-blue/60', className]} data-reveal-stagger>
   {items.map((item) => (
     <li
       class:list={[

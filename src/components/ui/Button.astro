@@ -39,7 +39,7 @@ const sizes = {
 } as const;
 
 const classes = [
-  'inline-flex items-center justify-center gap-2 rounded-full font-bold tracking-wide whitespace-nowrap transition-colors',
+  'inline-flex items-center justify-center gap-2 rounded-full font-bold tracking-wide whitespace-nowrap transition-[color,background-color,border-color,translate,box-shadow]',
   'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current',
   variants[variant],
   sizes[size],
@@ -51,7 +51,10 @@ const classes = [
 {href ? (
   <a
     href={href}
-    class:list={classes}
+    class:list={[
+      classes,
+      'hover:shadow-md hover:shadow-navy/20 motion-safe:hover:-translate-y-0.5',
+    ]}
     {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
     {...attrs}
   >

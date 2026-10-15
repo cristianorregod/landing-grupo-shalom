@@ -16,7 +16,7 @@ const advisorHref = site.links.advisor ?? whatsappHref();
   class="bg-[linear-gradient(100deg,var(--color-cta-from)_0%,#3460b4_55%,var(--color-cta-to)_100%)] py-16 text-white lg:py-24"
 >
   <Container class="grid items-center gap-10 lg:grid-cols-[3fr_2fr] lg:gap-16">
-    <div>
+    <div data-reveal>
       <Image
         src={isotype}
         alt=""
@@ -42,7 +42,7 @@ const advisorHref = site.links.advisor ?? whatsappHref();
       </div>
     </div>
 
-    <div class="rounded-3xl bg-white p-6 text-ink shadow-xl shadow-navy/20 sm:p-8">
+    <div class="rounded-3xl bg-white p-6 text-ink shadow-xl shadow-navy/20 sm:p-8" data-reveal>
       <ContactForm />
     </div>
   </Container>

@@ -12,6 +12,8 @@ interface Props {
   priority?: boolean;
   class?: string;
   pictureClass?: string;
+  /** Fade and settle in on scroll (`data-reveal="image"`). Never on above-the-fold images. */
+  reveal?: boolean;
 }
 
 const DEFAULT_WIDTHS = [480, 768, 1024, 1440, 1920];
@@ -24,6 +26,7 @@ const {
   priority = false,
   class: className,
   pictureClass,
+  reveal = false,
 } = Astro.props;
 
 // Never upscale beyond the source width.
@@ -39,5 +42,5 @@ const usableWidths = [...new Set([...widths.filter((w) => w < src.width), src.wi
   sizes={sizes}
   priority={priority}
   class={className}
-  pictureAttributes={{ class: pictureClass }}
+  pictureAttributes={{ class: pictureClass, 'data-reveal': reveal ? 'image' : undefined }}
 />

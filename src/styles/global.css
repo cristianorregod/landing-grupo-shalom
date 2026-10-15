@@ -117,3 +117,61 @@
     }
   }
 }
+
+/* Subtle hover lift for interactive cards (pointer devices only). */
+@utility hover-lift {
+  transition-property: translate, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+
+  @media (hover: hover) {
+    &:hover {
+      box-shadow: 0 12px 24px -12px rgb(48 50 98 / 0.3);
+
+      @media (prefers-reduced-motion: no-preference) {
+        translate: 0 -2px;
+      }
+    }
+  }
+}
+
+/*
+ * Scroll reveal (script in Base.astro). `js-reveal` is set on <html> only when
+ * IntersectionObserver exists, so without JS everything stays visible.
+ * `[data-reveal]`: fade up (default), `line` (scaleX bar), `image` (fade + scale).
+ * `[data-reveal-stagger]`: each direct child fades up with an incremental delay.
+ * Unlayered on purpose: it must win over utility transitions on the same element,
+ * so it also carries the `hover-lift` properties.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .js-reveal :is([data-reveal], [data-reveal-stagger] > *) {
+    transition:
+      opacity 550ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+      transform 550ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+      translate 200ms ease-out,
+      box-shadow 200ms ease-out;
+  }
+
+  .js-reveal :is([data-reveal], [data-reveal-stagger] > *):not(.is-revealed) {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  .js-reveal [data-reveal='line']:not(.is-revealed) {
+    opacity: 1;
+    transform: scaleX(0);
+  }
+
+  .js-reveal [data-reveal='image']:not(.is-revealed) {
+    transform: scale(1.03);
+  }
+}
+
+[data-reveal='line'] {
+  transform-origin: left;
+}
+
+/* <picture> is inline by default and inline boxes ignore transforms. */
+picture[data-reveal] {
+  display: block;
+}

@@ -206,6 +206,15 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 
 ---
 
+## Phase 11 — Scroll reveal animations (2026-10-15)
+
+- [x] Inline IntersectionObserver script in `Base.astro` (no library): sets `js-reveal` on `<html>`, reveals each element once (threshold 0.15, bottom margin -10%)
+- [x] CSS in `global.css`: `data-reveal` (fade up 16px, 550 ms), `data-reveal="line"` (accent bar scaleX), `data-reveal="image"` (fade + scale 1.03), `data-reveal-stagger` (children 70 ms apart, capped at 6)
+- [x] Applied to section headings, leads, grids and images on the 5 pages; heroes stay static (LCP), only their accent bar animates. Header, floating button and the brands marquee are never animated
+- [x] Hover: buttons and interactive cards (`hover-lift`) rise 2 px with a soft shadow
+- [x] Content stays visible without JS, without IntersectionObserver and with `prefers-reduced-motion: reduce`
+- [ ] Browser check of the animations (manual)
+
 ## Pending tracker
 
 Mirrors the client pendings in the scope document. Update the status column as items arrive.
@@ -284,3 +293,4 @@ Mirrors the client pendings in the scope document. Update the status column as i
 | 2026-10-07 | Press note 4 link corrected by the client (Technocio). All 6 "Leer más" links are active.                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | 2026-10-13 | Contact form built in the final CTA card (`ContactForm.astro`): name, WhatsApp and email with native validation, Ley 1581 consent checkbox, honeypot, and success/error states. Sending is off until `contact.formEndpoint` is set (any service accepting a FormData POST with a JSON answer, e.g. Web3Forms or Formspree); meanwhile a valid submit shows a notice with the WhatsApp link. Lighthouse accessibility is now 97: the white-on-green button contrast (open decision) became measurable on "Ver catálogo completo" and "Enviar". |
 | 2026-10-14 | Client change request implemented: 4 new pages (Quiénes somos, Trabaja con nosotros, Contacto, Política de privacidad), static hero image, green WhatsApp button, sequential menu, new contact data and social links. Only pending: addresses of the 3 locations.                                                                                                                                                                                                                                                                             |
+| 2026-10-15 | Phase 11: scroll reveal animations with an inline IntersectionObserver script and CSS only. Heroes are not animated (LCP); reduced motion and no-JS show everything. Buttons and CTA cards lift 2 px on hover.                                                                                                                                                                                                                                                                                                                                |
