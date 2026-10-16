@@ -199,7 +199,7 @@ Tracking document for the MVP landing page. Source of scope: `docs/MVP_Landing_S
 - [x] `/trabaja-con-nosotros` from `WEB - JOBS.pdf`; vacancies list (empty state today) and a form that composes the message for WhatsApp or email (pedidos@)
 - [x] `/politica-de-privacidad` with the text of `gruposhalom.com.co/privacy`
 - [x] `/contacto` adapted from the reference HTML, using the `changes.md` data; compose form (WhatsApp or email)
-- [ ] `/contacto`: addresses of Planta Montevideo, Planta Veraguas and Tienda de la 31 (shown as "Dirección próximamente") — **client pending**
+- [x] `/contacto`: addresses of Planta Montevideo, Planta Veraguas and Tienda de la 31 — received 2026-10-16
 - [x] Redirects from the current site URLs (`/about-us`, `/jobs`, `/privacy`) in `public/_redirects` (Netlify)
 - [x] QA: 5 pages, no overflow at 390/1440, internal links and anchors resolve, Chromium + Firefox without JS errors. Lighthouse mobile: Performance 98–100, Accessibility 96–100, Best Practices 100, SEO 100
 - [x] Contrast: `brand-blue-text` (#2C5FC0) for blue text on light grays; white text on the blue sections. Only open issue: white on button green (#65A63E), pending client decision

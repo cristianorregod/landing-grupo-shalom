@@ -2,7 +2,7 @@ import { site } from '../config/site';
 
 export interface Location {
   name: string;
-  /** PENDING: address requested from the client. While null the card says it is coming soon. */
+  /** While null the card says the address is coming soon. */
   address: string | null;
   city: string;
 }
@@ -55,9 +55,9 @@ export const contactPage = {
     title: 'Nuestras sedes',
     lead: 'Encuéntrenos en nuestras plantas y en nuestra tienda.',
     items: [
-      { name: 'Planta Montevideo', address: null, city: 'Bogotá' },
-      { name: 'Planta Veraguas', address: null, city: 'Bogotá' },
-      { name: 'Tienda de la 31', address: null, city: 'Bogotá' },
+      { name: 'Planta Montevideo', address: 'Carrera 31 #12-26', city: 'Bogotá' },
+      { name: 'Planta Veraguas', address: 'Calle 4A #34-44', city: 'Bogotá' },
+      { name: 'Tienda de la 31', address: 'Carrera 31 #12-26', city: 'Bogotá' },
     ] satisfies Location[],
   },
   message: {
