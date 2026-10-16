@@ -76,16 +76,21 @@
 /* Long-form legal text (privacy policy). Content comes as plain HTML. */
 @layer components {
   .legal-content {
-    @apply max-w-3xl text-base leading-relaxed text-ink/90;
+    @apply text-base leading-relaxed text-ink/90;
 
     & h2 {
       @apply mt-14 border-t border-brand-blue/60 pt-8 text-xl leading-tight font-bold text-balance text-ink first:mt-0 first:border-t-0 first:pt-0 sm:text-2xl;
     }
     & h3 {
-      @apply mt-8 text-base font-bold text-ink sm:text-lg;
+      @apply mt-10 text-base font-bold text-ink sm:text-lg;
     }
     & p {
       @apply mt-4;
+    }
+    /* Justified like a printed document; narrow screens keep ragged-right to avoid gaps. */
+    & p,
+    & li {
+      @apply hyphens-auto sm:text-justify;
     }
     & ul,
     & ol {
